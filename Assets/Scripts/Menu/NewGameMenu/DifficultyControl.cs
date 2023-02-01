@@ -23,7 +23,6 @@ public class DifficultyControl : MonoBehaviour
       index++;
       index = ClampNumber(index);
       difficulty = difficulties[index];
-      print(index);
       _difficultyText.text = difficulty;
       PlayerPrefs.SetString("difficulty", difficulty);
    }
@@ -33,7 +32,6 @@ public class DifficultyControl : MonoBehaviour
       index--;
       index = ClampNumber(index);
       difficulty = difficulties[index];
-      print(index);
       _difficultyText.text = difficulty;
       PlayerPrefs.SetString("difficulty", difficulty);
       _difficultyText.text = difficulty;

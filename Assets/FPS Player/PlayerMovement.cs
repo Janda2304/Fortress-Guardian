@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion Movement Variables
     
     #region Jump Variables
-    public int  jumpHeight;
+    public float  jumpHeight;
     public float gravity = -9.81f;
     Vector3 velocity;
     [SerializeField] private Transform _groundCheck;

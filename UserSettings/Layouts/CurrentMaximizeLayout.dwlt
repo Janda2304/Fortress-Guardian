@@ -224,9 +224,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 585b0000
-      m_LastClickedID: 23384
-      m_ExpandedIDs: c0c9ffff2cfbffff845b0000
+      m_SelectedIDs: 2cfbffff
+      m_LastClickedID: 0
+      m_ExpandedIDs: c0c9ffff2afbffff2cfbffff845b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -502,9 +502,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -8.981598, y: -5.2229514, z: 0.09216496}
+    m_Target: {x: 3.9479866, y: 1.7478855, z: 0.12479913}
     speed: 2
-    m_Value: {x: -8.981598, y: -5.2229514, z: 0.09216496}
+    m_Value: {x: 3.9479866, y: 1.7478855, z: 0.12479913}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -551,13 +551,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.23550549, y: -0.6446211, z: 0.21885979, w: 0.6936323}
+    m_Target: {x: 0.022569753, y: 0.8448665, z: -0.035772443, w: 0.533329}
     speed: 2
-    m_Value: {x: 0.2355026, y: -0.64461315, z: 0.21885711, w: 0.6936238}
+    m_Value: {x: 0.022569437, y: 0.84485465, z: -0.03577194, w: 0.5333215}
   m_Size:
-    m_Target: 10.5074625
+    m_Target: 1.2247449
     speed: 2
-    m_Value: 10.5074625
+    m_Value: 1.2247449
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ConsoleWindow
+  m_Name: ProjectBrowser
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -601,17 +601,17 @@ MonoBehaviour:
     y: 432.8
     width: 1172.8
     height: 298
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 11}
+  m_MinSize: {x: 231, y: 271}
+  m_MaxSize: {x: 10001, y: 10021}
+  m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
   - {fileID: 11}
   - {fileID: 12}
   - {fileID: 13}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -653,22 +653,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Buildings Prefabs
+    - Assets
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Buildings Prefabs
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: F:\Code\Unity Projects\Tower Defense
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 745c0000
-    m_LastClickedID: 23668
-    m_ExpandedIDs: 00000000f85b000000ca9a3bffffff7f
+    m_SelectedIDs: f85b0000
+    m_LastClickedID: 23544
+    m_ExpandedIDs: 00000000f85b0000805c000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -721,9 +721,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 585b0000
-    m_LastClickedInstanceID: 23384
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 2cfbffff
+    m_LastClickedInstanceID: -1236
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000da6600005c6600002242ffff725c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -986,7 +986,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 23384
+  m_LastSelectedObjectID: -11286
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1070,8 +1070,8 @@ MonoBehaviour:
     y: 0
     width: 363.19995
     height: 730.8
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}

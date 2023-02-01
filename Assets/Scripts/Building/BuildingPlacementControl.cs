@@ -1,91 +1,108 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingPlacementControl : MonoBehaviour
-{
+{ 
+    #region Variables
+    [Header("Building Prefabs")]
     [SerializeField] private GameObject[] building;
-   [SerializeField] private GameObject[] buildingPreview;
-   [SerializeField] private LayerMask groundLayer;
-   [SerializeField] private Camera playerCamera;
-   private Currency _currency;
-   private GameObject currentBuilding;
-   private int index = 0;
-   private bool isBuilding;
+    
+    [Header("Coordinates")]
+    [SerializeField] private float[] objectY;
+   
+    [Header("Others")]
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Camera playerCamera;
+    
+    [Header("Other Scripts")]
+    [SerializeField] private PreviewController _previewControl;
+    [SerializeField] private Currency _currency;
 
-
-
-   private bool IsBuildable()
-   {
-       //a raycast to check if the building can be placed by checking if the building is overlapping with another building
-            RaycastHit hit;
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, 100, groundLayer))
-            {
-                if (hit.collider.gameObject.CompareTag("Buildable"))
-                {
-                    return true;
-                }
-            }
-            return false;
-   }
-
-
-   void Update()
+    #region Private and Hidden Variables
+   
+    private Dictionary<string, int> prices = new Dictionary<string, int>();
+    [HideInInspector] public int cost;
+    [HideInInspector] public byte index = 0;
+    [HideInInspector] public bool isBuilding = false;
+    [HideInInspector] public GameObject currentBuilding;
+   
+    #endregion Private and Hidden Variables
+   
+    #endregion Variables
+    
+    #region Dictionary Data Setup
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && currentBuilding == null)
-        {
-           Build(building[0], buildingPreview[0]);
+        prices.Add("Cylinder", 50);
+        prices.Add("Fence", 100);
 
-        }
-        else if(Input.GetKeyDown(KeyCode.Q) && currentBuilding != null)
+    }
+    #endregion Dictionary Data Setup    
+    
+
+    void Update()
+    {
+        #region Building Placement
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-           CancelBuild(buildingPreview[0]);
-        }
-       
-        if (Input.GetButtonDown("Fire1") && isBuilding && IsBuildable())
-        {
-            Instantiate(building[index], buildingPreview[0].transform.position, Quaternion.identity);
-            CancelBuild(buildingPreview[0]);
-        }
-         
-      
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-             
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-             
+            BuildSetup(0);
         }
         
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+          BuildSetup(1);
+        }
+        
+       
+        if (Input.GetButtonDown("Fire1") && isBuilding && _previewControl.isBuildable && _previewControl.haveEnoughMoney )
+        {
+            Instantiate(currentBuilding, _previewControl.preview.transform.position, _previewControl.preview.transform.rotation);
+            _currency.coins -= cost;
+            isBuilding = false;
+            _previewControl.HidePreview();
+        }
+        #endregion Building Placement
+        
+        #region Preview Moving
         if (isBuilding)
         {
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 10, groundLayer))
             {
-                buildingPreview[index].transform.position = new Vector3(hit.point.x, 2.849f, hit.point.z);
+                _previewControl.preview.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
                
                 
+            }
+
+            if (Input.GetKey(KeyCode.R))
+            {
+                _previewControl.preview.transform.Rotate(0, 0.5f, 0);
             }
            
            
         }
+        #endregion Preview Moving
         
         
-        void Build(GameObject _building, GameObject buildPreview)
+    }
+
+    void BuildSetup(byte index)
+    {
+        if (!isBuilding)
         {
-            currentBuilding = _building;
-            buildPreview.SetActive(true);
             isBuilding = true;
+            this.index = index;
+            currentBuilding = building[index];
+            cost = prices[building[index].name];
+            _previewControl.ShowPreview();
         }
-        
-        void CancelBuild(GameObject buildPreview)
+        else if (isBuilding)
         {
-            currentBuilding = null;
-            buildPreview.SetActive(false);
+            _previewControl.HidePreview();
             isBuilding = false;
         }
     }
+    
 }
