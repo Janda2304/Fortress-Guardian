@@ -21,7 +21,7 @@ public class DifficultyControl : MonoBehaviour
    public void ChangeDifficulty()
    {
       index++;
-      index = ClampNumber(index);
+      index = ClampNumber(index, 0, 2);
       difficulty = difficulties[index];
       _difficultyText.text = difficulty;
       PlayerPrefs.SetString("difficulty", difficulty);
@@ -30,10 +30,8 @@ public class DifficultyControl : MonoBehaviour
    public void ChangeDifficultyBack()
    {
       index--;
-      index = ClampNumber(index);
+      index = ClampNumber(index, 0, 2);
       difficulty = difficulties[index];
-      _difficultyText.text = difficulty;
-      PlayerPrefs.SetString("difficulty", difficulty);
       _difficultyText.text = difficulty;
       PlayerPrefs.SetString("difficulty", difficulty);
    }
@@ -49,19 +47,21 @@ public class DifficultyControl : MonoBehaviour
       else
       {
          difficulty = "Novice";
+         _difficultyText.text = difficulty;
+         PlayerPrefs.SetString("difficulty", difficulty);
       }
    }
 
 
-   private int ClampNumber(int value)
+   private int ClampNumber(int value, int min, int max)
    {
-      if (value > 2)
+      if (value > max)
       {
-         value = 0;
+         value = min;
       }
-      else if (value < 0)
+      else if (value < min)
       {
-         value = 2;
+         value = max;
       }
       
       return value;

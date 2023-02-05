@@ -7,7 +7,7 @@ public class PauseManager : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private KeyCode pauseKey;
-    private bool isPaused = false;
+    [HideInInspector] public bool isPaused = false;
     [SerializeField] private GameObject[] medals;
 
 
@@ -21,7 +21,8 @@ public class PauseManager : MonoBehaviour
         if (Input.GetKeyDown(pauseKey) && !isPaused)
         {
             Pause();
-        }else if (Input.GetKeyDown(pauseKey) && isPaused)
+        }
+        else if (Input.GetKeyDown(pauseKey) && isPaused)
         {
             Resume();
         }

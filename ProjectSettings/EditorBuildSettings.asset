@@ -4,11 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: 
-  - enabled: 1
-    path: Assets/Scenes/Game.unity
-    guid: 0367c24673375b243962ee41003a7e0a
+  m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 14a26be41a762f34992ea2480b201070
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: 0367c24673375b243962ee41003a7e0a
+  - enabled: 0
+    path: Assets/TowerDefence_Vsquad/Scene/HM_demoscene.unity
+    guid: 08220b6305386ea4dba20fabc22fc6d7
   m_configObjects: {}

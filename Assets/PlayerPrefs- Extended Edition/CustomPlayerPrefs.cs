@@ -7,7 +7,8 @@ using UnityEngine;
 /// </summary>
 public static class PlayerPrefs
 {
-  
+
+
     #region CustomPlayerPrefs
 
     
@@ -23,6 +24,19 @@ public static class PlayerPrefs
     {
        int intValue = PlayerPrefs.GetInt(key);
        return intValue == 1 ? true : false;
+      
+    }
+    
+    public static bool GetBool(string key, bool defaultValue)
+    {
+       if (PlayerPrefs.HasKey(key))
+       {
+          return GetBool(key);
+       }
+       else
+       {
+          return defaultValue;
+       }
     }
     #endregion Boolean
     
@@ -39,6 +53,18 @@ public static class PlayerPrefs
         value.x = PlayerPrefs.GetFloat(key + "x");
         value.y = PlayerPrefs.GetFloat(key + "y");
         return value;
+    }
+    
+    public static Vector2 GetVector2(string key, Vector2 defaultValue)
+    {
+       if (PlayerPrefs.HasKey(key))
+       {
+          return GetVector2(key);
+       }
+       else
+       {
+          return defaultValue;
+       }
     }
     #endregion Vector2
     
@@ -58,6 +84,18 @@ public static class PlayerPrefs
         value.z = PlayerPrefs.GetFloat(key + "z");
         return value;
 
+    }
+    
+    public static Vector3 GetVector3(string key, Vector3 defaultValue)
+    {
+       if (PlayerPrefs.HasKey(key))
+       {
+          return GetVector3(key);
+       }
+       else
+       {
+          return defaultValue;
+       }
     }
     #endregion Vector3
     
@@ -80,6 +118,18 @@ public static class PlayerPrefs
         return value;
     }
     
+    public static Color GetColor(string key, Color defaultValue)
+    {
+       if (PlayerPrefs.HasKey(key))
+       {
+          return GetColor(key);
+       }
+       else
+       {
+          return defaultValue;
+       }
+    }
+    
     #endregion Color
   
    
@@ -99,6 +149,11 @@ public static class PlayerPrefs
             return  UnityEngine.PlayerPrefs.GetInt(key);
         }
         
+        public static int GetInt(string key, int defaultValue)
+        {
+            return UnityEngine.PlayerPrefs.GetInt(key, defaultValue);
+        }
+        
         public static void SetFloat(string key, float value)
         {
             UnityEngine.PlayerPrefs.SetFloat(key, value);
@@ -109,6 +164,11 @@ public static class PlayerPrefs
             return  UnityEngine.PlayerPrefs.GetFloat(key);
         }
         
+        public static float GetFloat(string key, float defaultValue)
+        {
+            return UnityEngine.PlayerPrefs.GetFloat(key, defaultValue);
+        }
+        
         public static void SetString(string key, string value)
         {
             UnityEngine.PlayerPrefs.SetString(key, value);
@@ -117,6 +177,11 @@ public static class PlayerPrefs
         public static string GetString(string key)
         {
             return UnityEngine.PlayerPrefs.GetString(key);
+        }
+        
+        public static string GetString(string key, string defaultValue)
+        {
+            return UnityEngine.PlayerPrefs.GetString(key, defaultValue);
         }
         
         public static void DeleteKey(string key)

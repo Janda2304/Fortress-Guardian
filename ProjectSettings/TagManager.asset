@@ -4,20 +4,23 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - enemyBug
   - Castle
+  - Waypoint
+  - Spawnpoint
+  - Enemy
+  - Building
   - Buildable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Buildable
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
+  - Player
+  - Castle
+  - Building
   - 
   - 
   - 

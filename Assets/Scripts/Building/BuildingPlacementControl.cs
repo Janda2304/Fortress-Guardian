@@ -7,10 +7,7 @@ public class BuildingPlacementControl : MonoBehaviour
     #region Variables
     [Header("Building Prefabs")]
     [SerializeField] private GameObject[] building;
-    
-    [Header("Coordinates")]
-    [SerializeField] private float[] objectY;
-   
+
     [Header("Others")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Camera playerCamera;
@@ -18,6 +15,8 @@ public class BuildingPlacementControl : MonoBehaviour
     [Header("Other Scripts")]
     [SerializeField] private PreviewController _previewControl;
     [SerializeField] private Currency _currency;
+    [SerializeField] private BuildingSoundsControl _sounds;
+    [SerializeField] private PauseManager _pause;
 
     #region Private and Hidden Variables
    
@@ -34,8 +33,8 @@ public class BuildingPlacementControl : MonoBehaviour
     #region Dictionary Data Setup
     private void Start()
     {
-        prices.Add("Cylinder", 50);
         prices.Add("Fence", 100);
+        prices.Add("Cannon", 200);
 
     }
     #endregion Dictionary Data Setup    
@@ -43,7 +42,7 @@ public class BuildingPlacementControl : MonoBehaviour
 
     void Update()
     {
-        #region Building Placement
+        #region Building Setup
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             BuildSetup(0);
@@ -54,16 +53,35 @@ public class BuildingPlacementControl : MonoBehaviour
           BuildSetup(1);
         }
         
-       
-        if (Input.GetButtonDown("Fire1") && isBuilding && _previewControl.isBuildable && _previewControl.haveEnoughMoney )
+        #endregion Building Setup
+        #region Building Placement
+        if (Input.GetButtonDown("Fire1") && isBuilding && _previewControl.isBuildable)
         {
             Instantiate(currentBuilding, _previewControl.preview.transform.position, _previewControl.preview.transform.rotation);
             _currency.coins -= cost;
             isBuilding = false;
             _previewControl.HidePreview();
+            _sounds.PlayBuildingSound();
+        }
+        else if (Input.GetButtonDown("Fire1") && isBuilding && !_previewControl.isBuildable)
+        {
+            _sounds.PlayErrorSound();
         }
         #endregion Building Placement
+
+        if (_pause.isPaused)
+        {
+            isBuilding = false;
+            _previewControl.HidePreview();
+        }
         
+       
+        
+        
+    }
+
+    void FixedUpdate()
+    {
         #region Preview Moving
         if (isBuilding)
         {
@@ -78,14 +96,12 @@ public class BuildingPlacementControl : MonoBehaviour
 
             if (Input.GetKey(KeyCode.R))
             {
-                _previewControl.preview.transform.Rotate(0, 0.5f, 0);
+                _previewControl.preview.transform.Rotate(0, 3f, 0);
             }
            
            
         }
         #endregion Preview Moving
-        
-        
     }
 
     void BuildSetup(byte index)
