@@ -587,7 +587,7 @@ RectTransform:
   - {fileID: 1143151940}
   - {fileID: 1126994242}
   m_Father: {fileID: 1517373946}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3010,7 +3010,7 @@ GameObject:
   - component: {fileID: 988865339}
   - component: {fileID: 988865340}
   m_Layer: 0
-  m_Name: Hints Toggle
+  m_Name: Tips Toggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3031,7 +3031,7 @@ RectTransform:
   - {fileID: 2037822599}
   - {fileID: 1113402200}
   m_Father: {fileID: 1517373946}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3556,7 +3556,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -49.2, y: -26.8}
+  m_AnchoredPosition: {x: -148.3, y: -25.1}
   m_SizeDelta: {x: -28, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1113402201
@@ -3579,7 +3579,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HINTS
+  m_text: TIPS & TRICKS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -3642,7 +3642,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 106.67985, w: 10.159985}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5866,10 +5866,10 @@ RectTransform:
   m_Children:
   - {fileID: 860836152}
   - {fileID: 290960366}
-  - {fileID: 988865339}
   - {fileID: 1910429748}
   - {fileID: 228467449}
   - {fileID: 1945286326}
+  - {fileID: 988865339}
   - {fileID: 1257286556}
   m_Father: {fileID: 661972582}
   m_RootOrder: 0
@@ -7454,7 +7454,7 @@ RectTransform:
   - {fileID: 766125526}
   - {fileID: 1836669148}
   m_Father: {fileID: 1517373946}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7621,7 +7621,7 @@ RectTransform:
   - {fileID: 2078716398}
   - {fileID: 386616084}
   m_Father: {fileID: 1517373946}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

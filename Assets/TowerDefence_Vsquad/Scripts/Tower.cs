@@ -93,7 +93,7 @@ public class Tower : MonoBehaviour {
         if (TowerHp.CastleHp <= 0)        {
             
             Destroy(gameObject);
-            DestroyParticle = Instantiate(DestroyParticle, Towerbug.transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal_2)) as GameObject;            
+            DestroyParticle = Instantiate(DestroyParticle, Towerbug.transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal_2));            
             Destroy(DestroyParticle, 3);
         }
 

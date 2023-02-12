@@ -1,8 +1,11 @@
 using System.Linq;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-public class BuildingPlacementControl : MonoBehaviour
+namespace FG_BuildingSystem
+{
+    public class BuildingPlacementControl : MonoBehaviour
 { 
     #region Variables
     [Header("Building Prefabs")]
@@ -122,3 +125,6 @@ public class BuildingPlacementControl : MonoBehaviour
     }
     
 }
+
+}
+

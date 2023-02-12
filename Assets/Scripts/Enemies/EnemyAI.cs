@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using FG_BuildingSystem;
@@ -19,14 +19,16 @@ public class EnemyAI : MonoBehaviour
     [Header("Enemy Stats Settings")] 
     public float maxHealth = 100f;
     [HideInInspector] public float health;
-    [SerializeField] private float damage = 0.5f;
+    [SerializeField] private float damage = 1f;
     [SerializeField] private int moneyGain = 25;
-
     
 
     
+
+    private bool isIdle = false;
     private bool isAttacking;
     private Collider[] hitColliders;
+    private byte index;
     #endregion
 
     void Start()
@@ -38,8 +40,9 @@ public class EnemyAI : MonoBehaviour
         transform.position = spawnpoint;
         animator.SetBool("Run", true);
         destination = GameObject.FindGameObjectWithTag("Castle").transform.position;
-        agent.SetDestination(destination);
         _currency = GameObject.FindGameObjectWithTag("GameController").GetComponent<Currency>();
+        agent.SetDestination(destination);
+
         #endregion Setup
 
     }
@@ -57,27 +60,24 @@ public class EnemyAI : MonoBehaviour
             animator.SetBool("Attack", true);
             agent.isStopped = true;
             agent.destination = hitColliders[0].transform.position;
+           
         }
-        if (!isAttacking &&)
+        
+        if (!isAttacking && !isIdle)
         {
             animator.SetBool("Run", true);
             animator.SetBool("Attack", false);
             agent.isStopped = false;
-            agent.destination = destination;
-
-
-
-
         }
 
-       
         
-        if (Vector3.Distance(transform.position, destination) < 6f && !isAttacking)
+
+        if (Vector3.Distance(transform.position, destination) < 1f && !isAttacking)
         {
             agent.isStopped = true;
             animator.SetBool("Run", false);
             animator.SetBool("Idle", true);
-            agent.isStopped = true;
+            isIdle = true;
         }
            
         
@@ -90,7 +90,7 @@ public class EnemyAI : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
-            _currency.coins += moneyGain;
+            _currency.AddCoins(moneyGain);
         }
     }
 
@@ -121,4 +121,5 @@ public class EnemyAI : MonoBehaviour
         health -= damage;
     }
 
+   
 }

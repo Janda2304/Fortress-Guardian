@@ -19,7 +19,7 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnGoblin()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 3; i++)
         {
             yield return new WaitForSeconds(2);
             Instantiate(goblin, goblin.GetComponent<EnemyAI>().spawnpoint, Quaternion.identity);

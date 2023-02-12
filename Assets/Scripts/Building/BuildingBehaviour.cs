@@ -3,23 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingBehaviour : MonoBehaviour
+namespace FG_BuildingSystem
 {
-    public float maxHealth;
-   [HideInInspector] public float health;
-
-
-    private void Start()
+    public class BuildingBehaviour : MonoBehaviour
     {
-        health = maxHealth;
-    }
+        public float maxHealth;
+        [HideInInspector] public float health;
 
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0)
+
+        private void Start()
         {
-            Destroy(gameObject);
+            health = maxHealth;
+        }
+
+        public void TakeDamage(float damage)
+        {
+            health -= damage;
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
+
+
