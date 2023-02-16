@@ -1319,16 +1319,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 7777574818312357889}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.33
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -1348,11 +1348,13 @@ MonoBehaviour:
   spawnpoint: {x: 14.56, y: 3.727, z: 25.987}
   destination: {x: 0, y: 0, z: 0}
   animator: {fileID: 7691923099652771475}
+  deathAnimation: {fileID: 7400000, guid: 9d9a3edb5004347409571c6785e30e97, type: 3}
   _currency: {fileID: 0}
   maxHealth: 30
   health: 0
-  damage: 1
+  damage: 2
   moneyGain: 25
+  isDeath: 0
 --- !u!135 &2426107617417240640
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: projectileDamage
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3575985460318489761, guid: d39515c42a03a98449a9768c889775d5, type: 3}
+      propertyPath: maxHealth
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 3575985460318489763, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: m_Name
       value: Cannon

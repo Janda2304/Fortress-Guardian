@@ -1,8 +1,9 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using FG_BuildingSystem;
+
 
 public class EnemyAI : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private Vector3 destination = new Vector3();
     [Header("Animations")]
     public Animator animator;
+    [SerializeField] private AnimationClip deathAnimation;
     [Header("Other Scripts")]
     [SerializeField] private Currency _currency;
 
@@ -26,6 +28,7 @@ public class EnemyAI : MonoBehaviour
     
 
     private bool isIdle = false;
+    public bool isDeath = false;
     private bool isAttacking;
     private Collider[] hitColliders;
     private byte index;
@@ -51,14 +54,15 @@ public class EnemyAI : MonoBehaviour
     
     private void Update()
     {
+        
         var transform1 = transform;
         isAttacking =  Physics.CheckBox(transform1.position, transform1.localScale, Quaternion.identity, LayerMask.GetMask("Building", "Castle"));
         hitColliders = Physics.OverlapBox(transform1.position, transform1.localScale, Quaternion.identity, LayerMask.GetMask("Building", "Castle"));
         if (isAttacking)
         {
-            animator.SetBool("Run", false);
-            animator.SetBool("Attack", true);
             agent.isStopped = true;
+            animator.SetBool("Attack", true);
+            animator.SetBool("Run", false);
             agent.destination = hitColliders[0].transform.position;
            
         }
@@ -67,6 +71,7 @@ public class EnemyAI : MonoBehaviour
         {
             animator.SetBool("Run", true);
             animator.SetBool("Attack", false);
+            agent.destination = destination;
             agent.isStopped = false;
         }
 
@@ -89,8 +94,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (health <= 0)
         {
-            Destroy(gameObject);
-            _currency.AddCoins(moneyGain);
+            StartCoroutine(Death());
+
         }
     }
 
@@ -98,27 +103,37 @@ public class EnemyAI : MonoBehaviour
     {
         if (hitColliders.Length > 0)
         {
-            foreach (var hitCollider in hitColliders)
+          
+            Collider hitCollider = hitColliders[0];
+            if (hitCollider.gameObject.CompareTag("Building"))
             {
-                if (hitCollider.gameObject.CompareTag("Building"))
-                {
-                    hitCollider.GetComponentInParent<BuildingBehaviour>().TakeDamage(damage);
-                   
-                    transform.LookAt(hitCollider.transform);
-                }
-                else if (hitCollider.gameObject.CompareTag("Castle"))
-                {
-                    _currency.health -= damage;
-                }
-              
+                hitCollider.GetComponentInParent<BuildingBehaviour>().TakeDamage(damage);
+                transform.LookAt(hitCollider.transform);
             }
+            else
+            {
+              _currency.health -= damage;
+                transform.LookAt(hitCollider.transform);
+            }
+         
+                
+                
+              
         }
-       
+
     }
     
     public void TakeDamage(float damage)
     {
         health -= damage;
+    }
+    
+    private IEnumerator Death()
+    {
+        animator.SetBool("Death", true);
+        yield return new WaitForSeconds(deathAnimation.length);
+        Destroy(gameObject);
+        _currency.AddCoins(moneyGain);
     }
 
    

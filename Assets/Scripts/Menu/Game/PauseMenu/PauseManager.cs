@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject pause;
+    [SerializeField] private GameObject settingsMenu;
     [SerializeField] private KeyCode pauseKey;
     [HideInInspector] public bool isPaused = false;
     [SerializeField] private GameObject[] medals;
@@ -53,6 +55,8 @@ public class PauseManager : MonoBehaviour
     private void Pause()
     {
         pauseMenu.SetActive(true);
+        pause.SetActive(true);
+        settingsMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0;
         isPaused = true;
@@ -61,8 +65,23 @@ public class PauseManager : MonoBehaviour
     private void Resume()
     {
         pauseMenu.SetActive(false);
+        pause.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;
         isPaused = false;
+    }
+
+    public void OnSettingsButton()
+    {
+        pause.SetActive(false);
+        settingsMenu.SetActive(true);
+
+    }
+    
+    public void OnBackButton()
+    {
+        pauseMenu.SetActive(true);
+        pause.SetActive(true);
+        settingsMenu.SetActive(false);
     }
 }

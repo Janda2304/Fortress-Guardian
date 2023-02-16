@@ -25,6 +25,7 @@ public class CannonAI : MonoBehaviour
    private float timer  = 0f;
    private float timerMax = 0;
    private Collider[] targets;
+   private GameObject target;
 
    private void Start()
    {
@@ -42,7 +43,11 @@ public class CannonAI : MonoBehaviour
       targets = Physics.OverlapSphere(transform.position, cannonRange, LayerMask.GetMask("Enemy"));
       if (targets.Length > 0)
       {
-         
+        target = targets[0].gameObject;
+         if (target.GetComponentInParent<EnemyAI>().isDeath)
+         {
+            target = targets[1].gameObject;
+         }
          if (timer >= timerMax)
          {
             StartCoroutine(Fire());
@@ -72,7 +77,7 @@ public class CannonAI : MonoBehaviour
 
    private void RotateCannon()
    {
-      Vector3 lookPos = targets[0].transform.position - cannonPivot.position;
+      Vector3 lookPos = target.transform.position - cannonPivot.position;
       lookPos.y = 0;
       Quaternion rotation = Quaternion.LookRotation(lookPos);
       cannonPivot.rotation = Quaternion.Slerp(cannonPivot.rotation, rotation, rotationSpeed * Time.deltaTime);

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -9,19 +8,39 @@ public class FrameRateController : MonoBehaviour
     private int frameRate;
     private int index;
     private int[] frameRates = {60, 75, 120, 144 };
+    private int min = 0;
+    private int max = 3;
+
+    private string username;
 
     private void Start()
     {
         LoadFps();
+        username = PlayerPrefs.GetString("Username");
+        if (username is "aleš" or "ales" or "aski" or "aski_98" or "aski_94" or "aski94" or "aski98")
+        {
+            frameRates = new int[] { 60, 75, 120, 144, Int32.MaxValue };
+            max = 4;
+        }
+      
+        
     }
 
     public void ChangeFPS()
     {
         index++;
-        index = ClampNumber(index, 0, 3);
+        index = ClampNumber(index, min, max);
         frameRate = frameRates[index];
         Application.targetFrameRate = frameRate;
-        fpsText.text = frameRate.ToString();
+        if (frameRate == Int32.MaxValue)
+        {
+            fpsText.text = "Unlimited";
+        }
+        else if (frameRate != Int32.MaxValue)
+        {
+            fpsText.text =  frameRate.ToString();
+        
+        }
         PlayerPrefs.SetInt("FrameRate", frameRate);
     }
 
@@ -29,7 +48,7 @@ public class FrameRateController : MonoBehaviour
     public void ChangeFPSBack()
     {
         index--;
-        index = ClampNumber(index, 0, 3);
+        index = ClampNumber(index, min, max);
         frameRate = frameRates[index];
         Application.targetFrameRate = frameRate;
         fpsText.text = frameRate.ToString();

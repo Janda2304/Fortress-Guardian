@@ -45,7 +45,11 @@ public class Tips : MonoBehaviour
                 yield return new WaitForSeconds(delay);
                 hintText.text = $"You can also press F2 to see the controls";
                 yield return new WaitForSeconds(delay);
+                hintText.text = $"Press F3 to see your Bestiary";
+                yield return new WaitForSeconds(delay);
                 hintText.text = $"you can pause the game by pressing Escape";
+                yield return new WaitForSeconds(delay);
+                hintText.text = $"also you can start every round by pressing the L key on your keyboard";
                 yield return new WaitForSeconds(delay);
                 hintText.text = $"And you can also reset or disable this tutorial and tips in the options menu";
                 yield return new WaitForSeconds(delay);

@@ -12,6 +12,8 @@ public class Currency : MonoBehaviour
     [SerializeField] private SoundsManager _sounds;
     public int coins;
     public float health;
+    [SerializeField] private WaveSpawner _wave;
+    [SerializeField] private GameObject deathScreen;
 
 
     private void Start()
@@ -37,26 +39,35 @@ public class Currency : MonoBehaviour
         {
             health = 0;
             _sounds.GameOverSound();
+            deathScreen.SetActive(true);
+            Time.timeScale = 0;
         }
     }
     
     IEnumerator PassiveCoinGain()
     {
+
         yield return new WaitForSeconds(3);
-        string diff = PlayerPrefs.GetString("difficulty");
-        if (diff is "Novice" or "Journeyman")
-        {
-            StartCoroutine(PassiveCoinGain());
-            if (diff is "Novice")
+            string diff = PlayerPrefs.GetString("difficulty");
+            if (diff is "Novice" or "Journeyman" && _wave.isWaveActive)
             {
-                AddCoins(10);
+                StartCoroutine(PassiveCoinGain());
+                if (diff is "Novice")
+                {
+                    AddCoins(10);
+                }
+                else
+                {
+                    AddCoins(5);
+                }
+            
             }
             else
             {
-                AddCoins(5);
+                StartCoroutine(PassiveCoinGain());
             }
-            
-        }
+        
+        
     }
     
     public void AddCoins(int amount)

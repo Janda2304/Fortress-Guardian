@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Building
   - Buildable
+  - Bear
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Castle
   - Building
   - Enemy
-  - 
+  - Post Process
   - 
   - 
   - 

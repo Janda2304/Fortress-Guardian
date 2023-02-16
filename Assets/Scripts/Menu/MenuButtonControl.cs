@@ -1,3 +1,4 @@
+using BayatGames.SaveGameFree;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,46 +8,45 @@ public class MenuButtonControl : MonoBehaviour
     [SerializeField] private GameObject newGameMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject exitMenu;
+    private GameObject curMenu;
 
 
     private void Start()
     {
-        mainMenu.SetActive(true);
-        newGameMenu.SetActive(false);
         settingsMenu.SetActive(false);
+        newGameMenu.SetActive(false);
         exitMenu.SetActive(false);
+        
+        mainMenu.SetActive(true);
+        curMenu = mainMenu;
     }
     
     public void NewGame()
     {
-        mainMenu.SetActive(false);
+        curMenu.SetActive(false);
         newGameMenu.SetActive(true);
-        settingsMenu.SetActive(false);
-        exitMenu.SetActive(false);
+        curMenu = newGameMenu;
     }
     
     public void Settings()
     {
-        mainMenu.SetActive(false);
-        newGameMenu.SetActive(false);
+        curMenu.SetActive(false);
         settingsMenu.SetActive(true);
-        exitMenu.SetActive(false);
+        curMenu = settingsMenu;
     }
     
     public void Exit()
     {
-        mainMenu.SetActive(false);
-        newGameMenu.SetActive(false);
-        settingsMenu.SetActive(false);
+        curMenu.SetActive(false);
         exitMenu.SetActive(true);
+        curMenu = exitMenu;
     }
 
     public void BackToMenu()
     {
+        curMenu.SetActive(false);
         mainMenu.SetActive(true);
-        newGameMenu.SetActive(false);
-        settingsMenu.SetActive(false);
-        exitMenu.SetActive(false);
+        curMenu = mainMenu;
     }
 
 
