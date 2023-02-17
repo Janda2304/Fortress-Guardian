@@ -11,6 +11,7 @@ TagManager:
   - Building
   - Buildable
   - Bear
+  - WaveSpawner
   layers:
   - Default
   - TransparentFX

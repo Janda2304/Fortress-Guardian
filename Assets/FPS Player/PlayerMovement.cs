@@ -7,7 +7,7 @@ using UnityEngine.TextCore.Text;
 public class PlayerMovement : MonoBehaviour
 {
     #region Movement Variables
-    [SerializeField] private CharacterController CharacterController;
+    [SerializeField] private CharacterController characterController;
     
     private float playerSpeed = 0f;
     public float walkSpeed = 0f;
@@ -76,13 +76,13 @@ public class PlayerMovement : MonoBehaviour
 
         direction = transform.right * x + transform.forward * z;
 
-
-        CharacterController.Move(direction * playerSpeed * Time.deltaTime);
+        
+        characterController.Move(direction * (playerSpeed * Time.deltaTime));
 
         velocity.y += gravity * Time.deltaTime;
 
-        CharacterController.Move(velocity * Time.deltaTime);
-
+        characterController.Move(velocity * Time.deltaTime);
+     
 
 
     }

@@ -49,7 +49,7 @@ public class Currency : MonoBehaviour
 
         yield return new WaitForSeconds(3);
             string diff = PlayerPrefs.GetString("difficulty");
-            if (diff is "Novice" or "Journeyman" && _wave.isWaveActive)
+            if (diff is "Novice" or "Journeyman" && _wave.waveActive)
             {
                 StartCoroutine(PassiveCoinGain());
                 if (diff is "Novice")

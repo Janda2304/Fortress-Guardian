@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 203353948374779824}
   - component: {fileID: 464499712835231395}
   - component: {fileID: 1520063550569836454}
-  - component: {fileID: -6596133705216630667}
   m_Layer: 9
   m_Name: Fence
   m_TagString: Building
@@ -131,20 +130,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.149, z: 0}
   m_TimeToStationary: 0.5
---- !u!64 &-6596133705216630667
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159343342086314680}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 3c45f3bb59ed3884d8c2aeb3de7a32c4, type: 3}
 --- !u!1 &1135106013817525302
 GameObject:
   m_ObjectHideFlags: 0

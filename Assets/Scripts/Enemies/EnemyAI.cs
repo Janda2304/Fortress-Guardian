@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,14 @@ public class EnemyAI : MonoBehaviour
     [HideInInspector] public float health;
     [SerializeField] private float damage = 1f;
     [SerializeField] private int moneyGain = 25;
-    
+
+    [SerializeField] [Tooltip("A Radius in which the enemy will detect buildings" +
+                              "Set to 0 to disable detection" +
+                              "Set to the same value as Collider radius for best results")] 
+    private float detectionRadius = 0f;
+
+    [Header("Others")] 
+    [SerializeField] private Collider coll;
 
     
 
@@ -54,16 +62,15 @@ public class EnemyAI : MonoBehaviour
     
     private void Update()
     {
-        
         var transform1 = transform;
-        isAttacking =  Physics.CheckBox(transform1.position, transform1.localScale, Quaternion.identity, LayerMask.GetMask("Building", "Castle"));
-        hitColliders = Physics.OverlapBox(transform1.position, transform1.localScale, Quaternion.identity, LayerMask.GetMask("Building", "Castle"));
+        isAttacking =  Physics.CheckSphere(transform1.position, detectionRadius, LayerMask.GetMask("Building", "Castle"));
+        hitColliders = Physics.OverlapSphere(transform1.position, detectionRadius, LayerMask.GetMask("Building", "Castle"));
         if (isAttacking)
         {
-            agent.isStopped = true;
             animator.SetBool("Attack", true);
             animator.SetBool("Run", false);
             agent.destination = hitColliders[0].transform.position;
+            agent.isStopped = true;
            
         }
         
@@ -77,7 +84,7 @@ public class EnemyAI : MonoBehaviour
 
         
 
-        if (Vector3.Distance(transform.position, destination) < 1f && !isAttacking)
+        if (Vector3.Distance(transform.position, destination) < 3f && !isAttacking)
         {
             agent.isStopped = true;
             animator.SetBool("Run", false);
@@ -99,7 +106,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void DealDamage()
+    private void DealDamage()
     {
         if (hitColliders.Length > 0)
         {
@@ -135,6 +142,22 @@ public class EnemyAI : MonoBehaviour
         Destroy(gameObject);
         _currency.AddCoins(moneyGain);
     }
+    
+    private void OnDestroy()
+    {
+        if (GameObject.FindGameObjectWithTag("WaveSpawner") != null)
+        {
+            GameObject.FindGameObjectWithTag("WaveSpawner").GetComponent<WaveSpawner>().spawnedEnemies.Remove(gameObject);
+        }
+     
+    }
 
-   
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Building"))
+        {
+            isAttacking = true;
+            hitColliders[0] = collision.collider;
+        }
+    }
 }

@@ -1,140 +1,157 @@
-
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class WaveSpawner : MonoBehaviour
 {
-    [Header("Enemies")]
-    [SerializeField] private GameObject goblin;
-    [SerializeField] private GameObject bear;
-    [SerializeField] private GameObject cannon;
-    [SerializeField] private GameObject goblinWithCannon;
-    [SerializeField] private GameObject goblinOnBear;
-    [Header("Sounds")]
-    [SerializeField] private AudioSource source;
-    [SerializeField] private AudioClip errorClip;
-    [Header("Wave Settings")]
-    [SerializeField] private float timeBetweenSpawns = 3f;
-    [SerializeField] private int waveCount;
-    [Header("UI")]
-    [SerializeField] private TMP_Text errorText;
-    [SerializeField] private TMP_Text waveText;
+    [Header("UI")] 
+    [SerializeField] private TMP_Text waveTimerText;
+    [SerializeField] private TMP_Text waveNumberText;
+    [SerializeField] private TMP_Text waveActiveErrorText;
     
-    #region Private and Hidden vars
-    private float timeBetweenWaves = 5f;
-    [HideInInspector] public bool isWaveActive = false;
-    private bool levelCompleted = false;
-    private int wave = 0;
-    private GameObject[] enemies;
-    #endregion
-
+    [Header("Wave Settings")] 
+    private int currWave;
+    public int waveDuration;
+    private float waveTimer;
+    private float spawnInterval;
+    private float spawnTimer;
+    [SerializeField] private float waveCount;
+    [SerializeField][Tooltip("How much value will add up for every wave")] private int waveValueIncrease;
+    /*[HideInInspector]*/ public bool waveActive;
+    private int waveValue;
+    
+    [Header("Enemy Settings")]
+    public List<Enemy> enemies = new List<Enemy>();
+    public List<GameObject> enemiesToSpawn = new List<GameObject>();
+    public Transform[] spawnLocation;
+    public int spawnIndex;
+    [HideInInspector] public List<GameObject> spawnedEnemies = new List<GameObject>();
+  
     private void Start()
     {
-        waveText.text = $"{wave}/{waveCount}";
-        errorText.gameObject.SetActive(false);
-        string difficulty = PlayerPrefs.GetString("difficulty");
-        switch (difficulty)
-        {
-            case "Novice":
-                timeBetweenWaves = 75f;
-                break;
-            case "Journeyman":
-                timeBetweenWaves = 45f;
-                break;
-            case "Master":
-                timeBetweenWaves = 15f;
-                break;
-        }
-        
-    
+        waveActiveErrorText.text = "Wave is already active!";
+        waveActiveErrorText.gameObject.SetActive(false);
     }
 
-
-    void Update()
+    private void Update()
     {
+        if (!waveActive)
+        {
+            waveTimerText.text = "Wave is not active";
+        }
+        else
+        {
+            waveTimerText.text = "Next Wave in: " + decimal.Round(Convert.ToDecimal(waveTimer), 2);
+        }
        
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-
-
-        if (wave == waveCount)
+        waveNumberText.text = $"{currWave}/{waveCount}";
+        if (Input.GetKeyDown(KeyCode.L) && !waveActive && currWave < waveCount)
         {
-            isWaveActive = false;
-            levelCompleted = true;
+            waveActive = true;
+            currWave++;
+            GenerateWave();
         }
-        if (Input.GetKeyDown(KeyCode.L) && !isWaveActive && !levelCompleted)
-        {
-            wave++;
-            waveText.text = $"{wave}/{waveCount}";
-            isWaveActive = true;
-            Wave(wave);
-        }
-        else if (Input.GetKeyDown(KeyCode.L) && isWaveActive || levelCompleted)
+        else if (Input.GetKeyDown(KeyCode.L) && waveActive)
         {
             StartCoroutine(ErrorPopup());
         }
-           
+
+        if (spawnedEnemies.Count == 0 && waveActive && waveTimer < waveDuration - spawnInterval)
+        {
+            waveActive = false;
+            waveTimer = waveDuration;
+        }
+
 
 
     }
-
-
-    void Wave(int wave)
+    void FixedUpdate()
     {
-        switch (wave)
+        if (waveActive)
         {
-            case 1:
-                StartCoroutine(SpawnGoblin(5));
-                break;
-            case 2:
-                StartCoroutine(SpawnGoblin(3));
-                StartCoroutine(SpawnBear(1));
-                break;
-            case 3:
-                //wave 3
-                break;
-            case 4:
-                //wave 4
-                break;
-            case 5:
-               
-                break;
+            waveTimer -= Time.fixedDeltaTime;
         }
-            
+        if(spawnTimer <=0)
+        {
+            if(enemiesToSpawn.Count > 0)
+            {
+                GameObject enemy = Instantiate(enemiesToSpawn[0], spawnLocation[spawnIndex].position,Quaternion.identity); 
+                enemiesToSpawn.RemoveAt(0);
+                spawnedEnemies.Add(enemy);
+                spawnTimer = spawnInterval;
+ 
+                if(spawnIndex + 1 <= spawnLocation.Length-1)
+                {
+                    spawnIndex++;
+                }
+                else
+                {
+                    spawnIndex = 0;
+                }
+            }
+        }
         
-    }
-
-    IEnumerator SpawnGoblin(int amount)
-    {
-        for (int i = 0; i < amount; i++)
+        else
         {
-            yield return new WaitForSeconds(timeBetweenSpawns);
-            Instantiate(goblin, goblin.GetComponent<EnemyAI>().spawnpoint, Quaternion.identity);
-
+            spawnTimer -= Time.fixedDeltaTime;
+         
         }
+ 
+        if(waveTimer<=0 && waveActive)
+        {
+            currWave++;
+            GenerateWave();
+        }
+    }
+ 
+    public void GenerateWave()
+    {
+        waveValue = currWave * waveValueIncrease;
+        GenerateEnemies();
+ 
+        spawnInterval = currWave / 1f; 
+        waveTimer = waveDuration; 
+    }
+ 
+    public void GenerateEnemies()
+    {
+        
+ 
+        List<GameObject> generatedEnemies = new List<GameObject>();
+        while(waveValue>0 || generatedEnemies.Count <50)
+        {
+            int randEnemyId = Random.Range(0, enemies.Count);
+            int randEnemyCost = enemies[randEnemyId].cost;
+ 
+            if(waveValue-randEnemyCost>=0)
+            {
+                generatedEnemies.Add(enemies[randEnemyId].enemyPrefab);
+                waveValue -= randEnemyCost;
+            }
+            else if(waveValue<=0)
+            {
+                break;
+            }
+        }
+        enemiesToSpawn.Clear();
+        enemiesToSpawn = generatedEnemies;
     }
     
-    IEnumerator SpawnBear(int amount)
+    private IEnumerator ErrorPopup()
     {
-        for (int i = 0; i < amount; i++)
-        {
-            yield return new WaitForSeconds(timeBetweenSpawns);
-            Instantiate(bear, bear.GetComponent<EnemyAI>().spawnpoint, Quaternion.identity);
-          
-        }
+        waveActiveErrorText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1);
+        waveActiveErrorText.gameObject.SetActive(false);
     }
-    
-    IEnumerator ErrorPopup()
-    {
-        errorText.text = "Can't start a new wave while there is a wave already active";
-        errorText.gameObject.SetActive(true);
-        source.PlayOneShot(errorClip);
-        yield return new WaitForSeconds(0.75f);
-        errorText.gameObject.SetActive(false);
-        
-    }
-
-
+  
+}
+ 
+[System.Serializable]
+public class Enemy
+{
+    public GameObject enemyPrefab;
+    public int cost;
 }

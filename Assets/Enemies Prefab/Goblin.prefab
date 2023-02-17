@@ -1319,7 +1319,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7777574818312357889}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.75
+  m_Radius: 0.6
   m_Speed: 2
   m_Acceleration: 3
   avoidancePriority: 50
@@ -1354,6 +1354,8 @@ MonoBehaviour:
   health: 0
   damage: 2
   moneyGain: 25
+  detectionRadius: 0.6
+  coll: {fileID: 2426107617417240640}
   isDeath: 0
 --- !u!135 &2426107617417240640
 SphereCollider:

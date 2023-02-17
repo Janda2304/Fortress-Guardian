@@ -20,6 +20,8 @@ public class SoundsManager : MonoBehaviour
         StartCoroutine(PlayRandom());
     }
     
+    
+    
     IEnumerator PlayRandom()
     {
         while (true)
@@ -28,10 +30,12 @@ public class SoundsManager : MonoBehaviour
             musicSource.clip = musicClips[index];
             musicSource.Play();
             yield return new WaitForSeconds(musicClips[index].length);
-               
-            
-            
+            StartCoroutine(PlayRandom());
         }
+      
+
+
+
     }
     
     

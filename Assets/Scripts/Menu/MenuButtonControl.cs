@@ -72,5 +72,10 @@ public class MenuButtonControl : MonoBehaviour
     {
         
     }
+
+    public void ResetTutorial()
+    {
+        PlayerPrefs.SetBool("ReturningPlayer", false);
+    }
     
 }
