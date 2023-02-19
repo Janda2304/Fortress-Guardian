@@ -23,7 +23,7 @@ namespace FG_BuildingSystem
 
     #region Private and Hidden Variables
    
-    private Dictionary<string, int> prices = new Dictionary<string, int>();
+    public /* till i make a new system for pricing then it can be private*/ Dictionary<string, int> prices = new Dictionary<string, int>();
     [HideInInspector] public int cost;
     [HideInInspector] public byte index = 0;
     [HideInInspector] public bool isBuilding = false;

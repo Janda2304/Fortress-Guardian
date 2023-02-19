@@ -2583,7 +2583,7 @@ MonoBehaviour:
   maxHealth: 50
   health: 0
   damage: 0.5
-  moneyGain: 25
+  moneyGain: 50
   detectionRadius: 1.75
   coll: {fileID: 0}
   isDeath: 0

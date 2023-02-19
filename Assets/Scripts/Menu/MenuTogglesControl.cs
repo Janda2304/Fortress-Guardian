@@ -53,5 +53,10 @@ public class MenuTogglesControl : MonoBehaviour
            PlayerPrefs.SetBool("hints", isOn);
        }
    }
+
+   public void ResetTutorial()
+   {
+       PlayerPrefs.DeleteKey("ReturningPlayer");
+   }
    
 }

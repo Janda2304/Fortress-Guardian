@@ -16,7 +16,6 @@ public class MenuButtonControl : MonoBehaviour
         settingsMenu.SetActive(false);
         newGameMenu.SetActive(false);
         exitMenu.SetActive(false);
-        
         mainMenu.SetActive(true);
         curMenu = mainMenu;
     }
@@ -27,14 +26,6 @@ public class MenuButtonControl : MonoBehaviour
         newGameMenu.SetActive(true);
         curMenu = newGameMenu;
     }
-    
-    public void Settings()
-    {
-        curMenu.SetActive(false);
-        settingsMenu.SetActive(true);
-        curMenu = settingsMenu;
-    }
-    
     public void Exit()
     {
         curMenu.SetActive(false);

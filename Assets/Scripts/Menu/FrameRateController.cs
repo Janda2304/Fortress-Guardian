@@ -4,86 +4,32 @@ using UnityEngine;
 
 public class FrameRateController : MonoBehaviour
 {
-    [SerializeField] private TMP_Text fpsText;
-    private int frameRate;
+    [SerializeField] private TMP_Dropdown dropdown;
+    private int[] frameRates = {30, 60, 75, 120, 144, 240, Int32.MaxValue};
     private int index;
-    private int[] frameRates = {60, 75, 120, 144 };
-    private int min = 0;
-    private int max = 3;
-
-    private string username;
-
+    
     private void Start()
     {
-        LoadFps();
-        username = PlayerPrefs.GetString("Username");
-        if (username is "aleš" or "ales" or "aski" or "aski_98" or "aski_94" or "aski94" or "aski98")
-        {
-            frameRates = new int[] { 60, 75, 120, 144, Int32.MaxValue };
-            max = 4;
-        }
-      
-        
+        LoadFrameRate();
+        index = Array.IndexOf(frameRates, Application.targetFrameRate);
+        dropdown.value = index;
+        dropdown.onValueChanged.AddListener(ChangeFrameRate);
     }
 
-    public void ChangeFPS()
+    private void ChangeFrameRate(int value)
     {
-        index++;
-        index = ClampNumber(index, min, max);
-        frameRate = frameRates[index];
-        Application.targetFrameRate = frameRate;
-        if (frameRate == Int32.MaxValue)
-        {
-            fpsText.text = "Unlimited";
-        }
-        else if (frameRate != Int32.MaxValue)
-        {
-            fpsText.text =  frameRate.ToString();
-        
-        }
-        PlayerPrefs.SetInt("FrameRate", frameRate);
-    }
-
-
-    public void ChangeFPSBack()
-    {
-        index--;
-        index = ClampNumber(index, min, max);
-        frameRate = frameRates[index];
-        Application.targetFrameRate = frameRate;
-        fpsText.text = frameRate.ToString();
-        PlayerPrefs.SetInt("FrameRate", frameRate);
+        index = value;
+        Application.targetFrameRate = frameRates[index];
+        PlayerPrefs.SetInt("FrameRate", frameRates[index]);
     }
     
-    
-    private int ClampNumber(int value, int min, int max)
+    private void LoadFrameRate()
     {
-        if (value > max)
+        if (PlayerPrefs.HasKey("FrameRate"))
         {
-            value = min;
-        }
-        else if (value < min)
-        {
-            value = max;
-        }
-      
-        return value;
-    }
-
-    private void LoadFps()
-    {
-        if (!PlayerPrefs.HasKey("FrameRate"))
-        {
-            frameRate = PlayerPrefs.GetInt("FrameRate", 60);
-            Application.targetFrameRate = frameRate;
-            fpsText.text = frameRate.ToString();
-        }
-        else
-        {
-            frameRate = PlayerPrefs.GetInt("FrameRate");
-            Application.targetFrameRate = frameRate;
-            fpsText.text = frameRate.ToString();
+            Application.targetFrameRate = PlayerPrefs.GetInt("FrameRate");
+            index = Array.IndexOf(frameRates, Application.targetFrameRate);
+            dropdown.value = index;
         }
     }
-    
 }

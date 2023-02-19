@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class MouseLook : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static float mouseSensitivity = 100f;
+    public static float mouseXSensitivity = 100f;
+    public static float mouseYSensitivity = 100f;
     
     public Transform playerBody;
    
@@ -22,8 +23,8 @@ public class MouseLook : MonoBehaviour
 
     void FixedUpdate()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseXSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseYSensitivity * Time.deltaTime;
 
 
         xRotation -= mouseY;

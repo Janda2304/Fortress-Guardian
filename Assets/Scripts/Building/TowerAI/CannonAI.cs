@@ -44,17 +44,16 @@ public class CannonAI : MonoBehaviour
       if (targets.Length > 0)
       {
         target = targets[0].gameObject;
-         if (target.GetComponentInParent<EnemyAI>().isDeath)
-         {
-            target = targets[1].gameObject;
-         }
-         if (timer >= timerMax)
-         {
-            StartCoroutine(Fire());
-            timer = 0.0f;
-            
-         }
-         RotateCannon();
+        if (timer >= timerMax)
+        {
+           if (target.GetComponentInParent<EnemyAI>().isDeath == false)
+           {
+              StartCoroutine(Fire());
+              timer = 0.0f;
+           }
+
+        }
+        RotateCannon();
          
         
       }

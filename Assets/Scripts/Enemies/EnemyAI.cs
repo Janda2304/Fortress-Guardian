@@ -29,7 +29,6 @@ public class EnemyAI : MonoBehaviour
                               "Set to 0 to disable detection" +
                               "Set to the same value as Collider radius for best results")] 
     private float detectionRadius = 0f;
-
     [Header("Others")] 
     [SerializeField] private Collider coll;
 
@@ -40,12 +39,12 @@ public class EnemyAI : MonoBehaviour
     private bool isAttacking;
     private Collider[] hitColliders;
     private byte index;
+    WaveSpawner _waveSpawner;
     #endregion
 
     void Start()
     {
         #region Setup
-
         spawnpoint = GameObject.FindGameObjectWithTag("Spawnpoint").transform.position;
         health = maxHealth;
         transform.position = spawnpoint;
@@ -53,6 +52,7 @@ public class EnemyAI : MonoBehaviour
         destination = GameObject.FindGameObjectWithTag("Castle").transform.position;
         _currency = GameObject.FindGameObjectWithTag("GameController").GetComponent<Currency>();
         agent.SetDestination(destination);
+        _waveSpawner = FindObjectOfType<WaveSpawner>();
 
         #endregion Setup
 
@@ -62,6 +62,7 @@ public class EnemyAI : MonoBehaviour
     
     private void Update()
     {
+      
         var transform1 = transform;
         isAttacking =  Physics.CheckSphere(transform1.position, detectionRadius, LayerMask.GetMask("Building", "Castle"));
         hitColliders = Physics.OverlapSphere(transform1.position, detectionRadius, LayerMask.GetMask("Building", "Castle"));
@@ -138,19 +139,15 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator Death()
     {
         animator.SetBool("Death", true);
+        _waveSpawner.spawnedEnemies.Remove(gameObject);
+        
+        gameObject.layer = 0;
         yield return new WaitForSeconds(deathAnimation.length);
         Destroy(gameObject);
         _currency.AddCoins(moneyGain);
     }
     
-    private void OnDestroy()
-    {
-        if (GameObject.FindGameObjectWithTag("WaveSpawner") != null)
-        {
-            GameObject.FindGameObjectWithTag("WaveSpawner").GetComponent<WaveSpawner>().spawnedEnemies.Remove(gameObject);
-        }
-     
-    }
+   
 
     private void OnCollisionEnter(Collision collision)
     {

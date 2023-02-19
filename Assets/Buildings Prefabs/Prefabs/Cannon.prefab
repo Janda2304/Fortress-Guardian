@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 2302661140497530390, guid: 36bd7dc441336054cb6f8266d9144214, type: 3}
     - target: {fileID: 3157861979030452097, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: projectileDamage
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3575985460318489761, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: maxHealth
@@ -49,7 +49,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6750547801310066604, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: m_Volume
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6750547801310066604, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: MaxDistance
