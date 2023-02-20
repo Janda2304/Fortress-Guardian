@@ -14,7 +14,6 @@ public class DifficultyControl : MonoBehaviour
    void Start()
    { 
       LoadDifficulty();
-      
    }
    
    #region Difficulty Change Functions

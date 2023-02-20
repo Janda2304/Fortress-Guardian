@@ -17,7 +17,6 @@ namespace FG_BuildingSystem
         [SerializeField] private Material cantBuild;
        
         [Header("Other Scripts")]
-        [SerializeField] private Currency _currency;
         [SerializeField] private BuildingPlacementControl _control;
         [SerializeField] private TowerRangePreview _range;
        
@@ -44,7 +43,7 @@ namespace FG_BuildingSystem
             var position = transform.position;
             isGrounded = Physics.Raycast(position, Vector3.down, 1f);
             isColliding = Physics.CheckBox(position, transform.localScale, Quaternion.identity, LayerMask.GetMask("Buildable", "Building", "Castle", "Enemy", "Player"));
-            haveEnoughMoney = _currency.coins >= _control.cost;
+            haveEnoughMoney = Currency.Coins >= _control.cost;
             
             if (!isColliding && haveEnoughMoney && isGrounded)
             {

@@ -11,47 +11,22 @@ public class MenuTogglesControl : MonoBehaviour
    
    private void Start()
    {
-       if (!PlayerPrefs.HasKey("hints"))
-       {
-           isOn = false;
-           hintToggle.SetIsOnWithoutNotify(isOn);
-        
-       }
-       else
-       {
-           if (PlayerPrefs.GetBool("hints") == false)
-           {
-               isOn = false;
-               hintToggle.SetIsOnWithoutNotify(isOn);
-           
-           }
-           else
-           {
-               isOn = true;
-              hintToggle.SetIsOnWithoutNotify(isOn);
-             
-           }
-        
-       }
+      
            
       
    }
 
    public void ToggleHints()
    {
-       if (!isOn)
+       if (!hintToggle.isOn)
        {
-           isOn = true;
-           hintToggle.SetIsOnWithoutNotify(isOn);
-       
-           PlayerPrefs.SetBool("hints", isOn);
+           PlayerPrefs.SetBool("Hints", false);
        }
        else
        {
-           isOn = false;
-           hintToggle.SetIsOnWithoutNotify(isOn);
-           PlayerPrefs.SetBool("hints", isOn);
+           PlayerPrefs.SetBool("Hints", true);
        }
+       
    }
 
    public void ResetTutorial()

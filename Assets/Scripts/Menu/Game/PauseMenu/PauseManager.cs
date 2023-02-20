@@ -10,7 +10,7 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private KeyCode pauseKey;
     [HideInInspector] public bool isPaused = false;
-    [SerializeField] private GameObject[] medals;
+    [SerializeField] private GameObject gameUI;
 
 
     void Start()
@@ -75,6 +75,7 @@ public class PauseManager : MonoBehaviour
     {
         pause.SetActive(false);
         settingsMenu.SetActive(true);
+        gameUI.SetActive(false);
 
     }
     
@@ -83,5 +84,6 @@ public class PauseManager : MonoBehaviour
         pauseMenu.SetActive(true);
         pause.SetActive(true);
         settingsMenu.SetActive(false);
+        gameUI.SetActive(true);
     }
 }

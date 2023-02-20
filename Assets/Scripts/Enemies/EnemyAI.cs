@@ -120,7 +120,7 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
-              _currency.health -= damage;
+                Currency.TakeDamage(damage);
                 transform.LookAt(hitCollider.transform);
             }
          
@@ -144,7 +144,7 @@ public class EnemyAI : MonoBehaviour
         gameObject.layer = 0;
         yield return new WaitForSeconds(deathAnimation.length);
         Destroy(gameObject);
-        _currency.AddCoins(moneyGain);
+        Currency.AddCoins(moneyGain);
     }
     
    

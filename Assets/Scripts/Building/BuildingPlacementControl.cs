@@ -61,7 +61,7 @@ namespace FG_BuildingSystem
         if (Input.GetButtonDown("Fire1") && isBuilding && _previewControl.isBuildable)
         {
             Instantiate(currentBuilding, _previewControl.preview.transform.position, _previewControl.preview.transform.rotation);
-            _currency.coins -= cost;
+            Currency.Coins -= cost;
             isBuilding = false;
             _previewControl.HidePreview();
             _sounds.PlayBuildingSound();

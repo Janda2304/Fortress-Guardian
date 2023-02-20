@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,13 @@ public class SettingsOverlayControl : MonoBehaviour
     [SerializeField] private GameObject audioSettings;
     [SerializeField] private GameObject controlsSettings;
     private GameObject curScreen;
-    
-    
-    
+
+
+    private void Start()
+    {
+        curScreen = mainSettings;
+    }
+
     public void OpenSettings()
     {
         mainMenu.SetActive(false);

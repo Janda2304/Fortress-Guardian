@@ -63,6 +63,13 @@ namespace BayatGames.SaveGameFree
 		/// The scale identifier.
 		/// </summary>
 		public string scaleIdentifier = "enter the scale identifier";
+		
+		[Tooltip ( "The save slot we save to." )]
+		
+		/// <summary>
+		/// the save slot
+		/// <summary>
+		public int saveSlot = 0;
 
 		[Tooltip ( "Encode the data?" )]
 		/// <summary>
@@ -317,39 +324,15 @@ namespace BayatGames.SaveGameFree
 		{
 			if ( savePosition )
 			{
-				SaveGame.Save<Vector3Save> ( 
-					positionIdentifier, 
-					transform.position, 
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+				SaveGame.Save<Vector3Save> (positionIdentifier, transform.position, saveSlot, encode, encodePassword, serializer, encoder, encoding, savePath );
 			}
 			if ( saveRotation )
 			{
-				SaveGame.Save<QuaternionSave> ( 
-					rotationIdentifier, 
-					transform.rotation, 
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+				SaveGame.Save<QuaternionSave> (rotationIdentifier, transform.rotation, saveSlot, encode, encodePassword, serializer, encoder, encoding, savePath );
 			}
 			if ( saveScale )
 			{
-				SaveGame.Save<Vector3Save> (
-					scaleIdentifier,
-					transform.localScale,
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+				SaveGame.Save<Vector3Save> (scaleIdentifier, transform.localScale, saveSlot, encode, encodePassword, serializer, encoder, encoding, savePath);
 			}
 		}
 
@@ -360,39 +343,15 @@ namespace BayatGames.SaveGameFree
 		{
 			if ( savePosition )
 			{
-				transform.position = SaveGame.Load<Vector3Save> ( 
-					positionIdentifier, 
-					defaultPosition, 
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+				transform.position = SaveGame.Load<Vector3Save> (positionIdentifier, saveSlot, defaultPosition, encode, encodePassword, serializer, encoder, encoding, savePath );
 			}
 			if ( saveRotation )
 			{
-				transform.rotation = SaveGame.Load<QuaternionSave> ( 
-					rotationIdentifier, 
-					Quaternion.Euler ( defaultRotation ), 
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+				transform.rotation = SaveGame.Load<QuaternionSave> (rotationIdentifier, saveSlot, Quaternion.Euler ( defaultRotation ), encode, encodePassword, serializer, encoder, encoding, savePath );
 			}
 			if ( saveScale )
 			{
-				transform.localScale = SaveGame.Load<Vector3Save> (
-					scaleIdentifier,
-					defaultScale,
-					encode,
-					encodePassword,
-					serializer,
-					encoder,
-					encoding,
-					savePath );
+				transform.localScale = SaveGame.Load<Vector3Save> (scaleIdentifier, saveSlot, defaultScale, encode, encodePassword, serializer, encoder, encoding, savePath );
 			}
 		}
 

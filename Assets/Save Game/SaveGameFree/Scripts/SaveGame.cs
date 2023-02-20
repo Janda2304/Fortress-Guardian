@@ -205,10 +205,11 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object to save.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj)
+        public static void Save<T>(string identifier, T obj, int saveFile)
         {
-            Save<T>(identifier, obj, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            Save<T>(identifier, obj, saveFile, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
@@ -216,11 +217,12 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <param name="encode">If set to <c>true</c> encode.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj, bool encode)
+        public static void Save<T>(string identifier, T obj, int saveFile, bool encode)
         {
-            Save<T>(identifier, obj, encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            Save<T>(identifier, obj, saveFile, encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
@@ -228,11 +230,12 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <param name="encodePassword">Encode password.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj, string encodePassword)
+        public static void Save<T>(string identifier, T obj, int saveFile, string encodePassword)
         {
-            Save<T>(identifier, obj, Encode, encodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            Save<T>(identifier, obj, saveFile, Encode, encodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
@@ -240,11 +243,12 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <param name="serializer">Serializer.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj, ISaveGameSerializer serializer)
+        public static void Save<T>(string identifier, T obj, int saveFile, ISaveGameSerializer serializer)
         {
-            Save<T>(identifier, obj, Encode, EncodePassword, serializer, Encoder, DefaultEncoding, SavePath);
+            Save<T>(identifier, obj, saveFile, Encode, EncodePassword, serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
@@ -252,11 +256,12 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <param name="encoder">Encoder.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj, ISaveGameEncoder encoder)
+        public static void Save<T>(string identifier, T obj, int saveFile, ISaveGameEncoder encoder)
         {
-            Save<T>(identifier, obj, Encode, EncodePassword, Serializer, encoder, DefaultEncoding, SavePath);
+            Save<T>(identifier, obj, saveFile, Encode, EncodePassword, Serializer, encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
@@ -264,11 +269,12 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <param name="encoding">Encoding.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj, Encoding encoding)
+        public static void Save<T>(string identifier, T obj, int saveFile, Encoding encoding)
         {
-            Save<T>(identifier, obj, Encode, EncodePassword, Serializer, Encoder, encoding, SavePath);
+            Save<T>(identifier, obj, saveFile, Encode, EncodePassword, Serializer, Encoder, encoding, SavePath);
         }
 
         /// <summary>
@@ -276,11 +282,12 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <param name="savePath">Save path.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj, SaveGamePath savePath)
+        public static void Save<T>(string identifier, T obj, int saveFile, SaveGamePath savePath)
         {
-            Save<T>(identifier, obj, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, savePath);
+            Save<T>(identifier, obj, saveFile, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, savePath);
         }
 
         /// <summary>
@@ -288,6 +295,7 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier">Identifier.</param>
         /// <param name="obj">Object to save.</param>
+        /// <param name="saveFile"> Save File Number</param>
         /// <param name="encode">Encrypt the data?</param>
         /// <param name="password">Encryption Password.</param>
         /// <param name="serializer">Serializer.</param>
@@ -295,7 +303,7 @@ namespace BayatGames.SaveGameFree
         /// <param name="encoding">Encoding.</param>
         /// <param name="path">Path.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static void Save<T>(string identifier, T obj, bool encode, string password, ISaveGameSerializer serializer, ISaveGameEncoder encoder, Encoding encoding, SaveGamePath path)
+        public static void Save<T>(string identifier, T obj, int saveFile, bool encode, string password, ISaveGameSerializer serializer, ISaveGameEncoder encoder, Encoding encoding, SaveGamePath path)
         {
             if (string.IsNullOrEmpty(identifier))
             {
@@ -316,10 +324,10 @@ namespace BayatGames.SaveGameFree
                 {
                     default:
                     case SaveGamePath.PersistentDataPath:
-                        filePath = string.Format("{0}/{1}", Application.persistentDataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" + $"/Save{saveFile}/", identifier);
                         break;
                     case SaveGamePath.DataPath:
-                        filePath = string.Format("{0}/{1}", Application.dataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.dataPath + "/Saves/" + $"/Save{saveFile}/" , identifier);
                         break;
                 }
             }
@@ -423,148 +431,161 @@ namespace BayatGames.SaveGameFree
         /// Loads data using identifier.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier)
+        public static T Load<T>(string identifier, int saveSlot)
         {
-            return Load<T>(identifier, default(T), Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, default(T), Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier and defaultValue.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="defaultValue">Default value.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue)
         {
-            return Load<T>(identifier, defaultValue, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, defaultValue, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier and encodePassword.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="encodePassword">Encode password.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, bool encode, string encodePassword)
+        public static T Load<T>(string identifier, int saveSlot, bool encode, string encodePassword)
         {
-            return Load<T>(identifier, default(T), encode, encodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, default(T), encode, encodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier and serializer.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="serializer">Serializer.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, ISaveGameSerializer serializer)
+        public static T Load<T>(string identifier, int saveSlot, ISaveGameSerializer serializer)
         {
-            return Load<T>(identifier, default(T), Encode, EncodePassword, serializer, Encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, default(T), Encode, EncodePassword, serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier and encoder.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="encoder">Encoder.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, ISaveGameEncoder encoder)
+        public static T Load<T>(string identifier, int saveSlot, ISaveGameEncoder encoder)
         {
-            return Load<T>(identifier, default(T), Encode, EncodePassword, Serializer, encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, default(T), Encode, EncodePassword, Serializer, encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier and encoding.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="encoding">Encoding.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, Encoding encoding)
+        public static T Load<T>(string identifier, int saveSlot, Encoding encoding)
         {
-            return Load<T>(identifier, default(T), Encode, EncodePassword, Serializer, Encoder, encoding, SavePath);
+            return Load<T>(identifier, saveSlot, default(T), Encode, EncodePassword, Serializer, Encoder, encoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier and savePath.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="savePath">Save path.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, SaveGamePath savePath)
+        public static T Load<T>(string identifier, int saveSlot, SaveGamePath savePath)
         {
-            return Load<T>(identifier, default(T), Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, savePath);
+            return Load<T>(identifier, saveSlot, default(T), Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, savePath);
         }
 
         /// <summary>
         /// Load the specified identifier, defaultValue and encode.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="defaultValue">Default value.</param>
         /// <param name="encode">If set to <c>true</c> encode.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue, bool encode)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue, bool encode)
         {
-            return Load<T>(identifier, defaultValue, encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, defaultValue, encode, EncodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier, defaultValue and encodePassword.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="defaultValue">Default value.</param>
         /// <param name="encodePassword">Encode password.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue, string encodePassword)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue, string encodePassword)
         {
-            return Load<T>(identifier, defaultValue, Encode, encodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, defaultValue, Encode, encodePassword, Serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier, defaultValue and serializer.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="defaultValue">Default value.</param>
         /// <param name="serializer">Serializer.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue, ISaveGameSerializer serializer)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue, ISaveGameSerializer serializer)
         {
-            return Load<T>(identifier, defaultValue, Encode, EncodePassword, serializer, Encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, defaultValue, Encode, EncodePassword, serializer, Encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier, defaultValue and encoder.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="defaultValue">Default value.</param>
         /// <param name="encoder">Encoder.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue, ISaveGameEncoder encoder)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue, ISaveGameEncoder encoder)
         {
-            return Load<T>(identifier, defaultValue, Encode, EncodePassword, Serializer, encoder, DefaultEncoding, SavePath);
+            return Load<T>(identifier, saveSlot, defaultValue, Encode, EncodePassword, Serializer, encoder, DefaultEncoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier, defaultValue and encoding.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="defaultValue">Default value.</param>
         /// <param name="encoding">Encoding.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue, Encoding encoding)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue, Encoding encoding)
         {
-            return Load<T>(identifier, defaultValue, Encode, EncodePassword, Serializer, Encoder, encoding, SavePath);
+            return Load<T>(identifier, saveSlot, defaultValue, Encode, EncodePassword, Serializer, Encoder, encoding, SavePath);
         }
 
         /// <summary>
         /// Load the specified identifier, defaultValue and savePath.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="defaultValue">Default value.</param>
         /// <param name="savePath">Save path.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue, SaveGamePath savePath)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue, SaveGamePath savePath)
         {
-            return Load<T>(identifier, defaultValue, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, savePath);
+            return Load<T>(identifier, saveSlot, defaultValue, Encode, EncodePassword, Serializer, Encoder, DefaultEncoding, savePath);
         }
 
         /// <summary>
@@ -579,7 +600,7 @@ namespace BayatGames.SaveGameFree
         /// <param name="encoding">Encoding.</param>
         /// <param name="path">Path.</param>
         /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public static T Load<T>(string identifier, T defaultValue, bool encode, string password, ISaveGameSerializer serializer, ISaveGameEncoder encoder, Encoding encoding, SaveGamePath path)
+        public static T Load<T>(string identifier, int saveSlot, T defaultValue, bool encode, string password, ISaveGameSerializer serializer, ISaveGameEncoder encoder, Encoding encoding, SaveGamePath path)
         {
             if (string.IsNullOrEmpty(identifier))
             {
@@ -605,10 +626,10 @@ namespace BayatGames.SaveGameFree
                 {
                     default:
                     case SaveGamePath.PersistentDataPath:
-                        filePath = string.Format("{0}/{1}", Application.persistentDataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" /*+ $"/Save{saveSlot}/"*/, identifier);
                         break;
                     case SaveGamePath.DataPath:
-                        filePath = string.Format("{0}/{1}", Application.dataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.dataPath + "/Saves/", identifier);
                         break;
                 }
             }

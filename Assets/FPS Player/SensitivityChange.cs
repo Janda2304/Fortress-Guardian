@@ -15,6 +15,7 @@ public class SensitivityChange : MonoBehaviour
     {
         mouseXSlider.value = PlayerPrefs.GetFloat("MouseX");
         mouseYSlider.value = PlayerPrefs.GetFloat("MouseX");
+        masterSlider.value = PlayerPrefs.GetFloat("MouseX");
         MouseLook.mouseXSensitivity = PlayerPrefs.GetFloat("MouseX");
         MouseLook.mouseYSensitivity = PlayerPrefs.GetFloat("MouseY");
     }

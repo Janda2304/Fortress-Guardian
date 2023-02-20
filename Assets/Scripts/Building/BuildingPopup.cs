@@ -52,7 +52,7 @@ namespace FG_BuildingSystem
 
         public IEnumerator Sell()
         {
-            _currency.coins += sellPrice;
+            Currency.Coins += sellPrice;
             yield return new WaitForSeconds(1);
             Destroy(building);
 

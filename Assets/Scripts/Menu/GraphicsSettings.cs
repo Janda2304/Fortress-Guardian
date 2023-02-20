@@ -4,18 +4,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace FG_Graphics
-{
-    public class GraphicsSettings : MonoBehaviour
-{
+{ 
+    public class GraphicsSettings : MonoBehaviour 
+    {
+    [Header("Post Processing")]
     [SerializeField] private PostProcessVolume postProcess;
     [SerializeField] private Toggle bloomToggle;
     [SerializeField] private Toggle ambientOcclusionToggle;
     [SerializeField] private Toggle motionBlurToggle;
     [SerializeField] private Toggle vignetteToggle;
-    [SerializeField] private  TMP_Dropdown resolutionDropdown;
+    [Header("Resolution/FrameRate")]
+    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    [SerializeField] private TMP_Dropdown fpsDropdown;
+    private int[] frameRates = {30, 60, 75, 120, 144, 240, Int32.MaxValue};
+    private int fpsIndex;
     #region Resolution
     private int[] resolutionsWidth = {3840, 2560, 1920, 1680, 1600, 1440, 1366, 1280, 800};
     private int[] resolutionsHeight = {2160, 1440, 1080, 1050, 900, 900, 768, 720, 600};
@@ -30,10 +36,15 @@ namespace FG_Graphics
             LoadMotionBlur();
             LoadVignette();
             LoadResolution();
+            LoadFrameRate();
             widthIndex = Array.IndexOf(resolutionsWidth, Screen.width);
             heightIndex = Array.IndexOf(resolutionsHeight, Screen.height);
             resolutionDropdown.value = widthIndex;
             resolutionDropdown.onValueChanged.AddListener(ChangeResolution);
+           
+            fpsIndex = Array.IndexOf(frameRates, Application.targetFrameRate);
+            fpsDropdown.value = fpsIndex;
+            fpsDropdown.onValueChanged.AddListener(ChangeFrameRate);
         }
 
         #region Toggles
@@ -115,8 +126,26 @@ namespace FG_Graphics
             
         }
         
+        private void ChangeFrameRate(int value)
+        {
+            fpsIndex = value;
+            Application.targetFrameRate = frameRates[fpsIndex];
+            PlayerPrefs.SetInt("FrameRate", frameRates[fpsIndex]);
+        }
+    
+     
+        
         #region LoadSettings
         
+        private void LoadFrameRate()
+        {
+            if (PlayerPrefs.HasKey("FrameRate"))
+            {
+                Application.targetFrameRate = PlayerPrefs.GetInt("FrameRate");
+                fpsIndex = Array.IndexOf(frameRates, Application.targetFrameRate);
+                fpsDropdown.value = fpsIndex;
+            }
+        }
         private void LoadResolution()
         {
             if (PlayerPrefs.HasKey("ResolutionWidth") && PlayerPrefs.HasKey("ResolutionHeight"))
