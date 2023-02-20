@@ -32,6 +32,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2302661140497530390, guid: 36bd7dc441336054cb6f8266d9144214, type: 3}
     - target: {fileID: 3157861979030452097, guid: d39515c42a03a98449a9768c889775d5, type: 3}
+      propertyPath: projectileForce
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 3157861979030452097, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: projectileDamage
       value: 4
       objectReference: {fileID: 0}

@@ -40,11 +40,11 @@ public class WaveSpawner : MonoBehaviour
     {
         if (!waveActive)
         {
-            waveTimerText.text = "Wave is not active";
+            waveTimerText.text = "Wave not active";
         }
         else
         {
-            waveTimerText.text = "Next Wave in: " + decimal.Round(Convert.ToDecimal(waveTimer), 2);
+            waveTimerText.text = $"{decimal.Round(Convert.ToDecimal(waveTimer), 1)}s";
         }
        
         waveNumberText.text = $"{currWave}/{waveCount}";

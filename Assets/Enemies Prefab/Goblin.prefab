@@ -1345,17 +1345,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 7780631288721497299}
-  spawnpoint: {x: 14.56, y: 3.727, z: 25.987}
   destination: {x: 0, y: 0, z: 0}
   animator: {fileID: 7691923099652771475}
   deathAnimation: {fileID: 7400000, guid: 9d9a3edb5004347409571c6785e30e97, type: 3}
-  _currency: {fileID: 0}
   maxHealth: 30
   health: 0
   damage: 2
   moneyGain: 40
   detectionRadius: 0.65
-  coll: {fileID: 2426107617417240640}
   isDeath: 0
 --- !u!135 &2426107617417240640
 SphereCollider:

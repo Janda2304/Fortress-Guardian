@@ -16,6 +16,7 @@ public class PauseManager : MonoBehaviour
     void Start()
     {
         pauseMenu.SetActive(false);
+        gameUI.SetActive(true);
     }
     
     void Update()
