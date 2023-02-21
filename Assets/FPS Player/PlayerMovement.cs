@@ -1,20 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BayatGames.SaveGameFree;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+
 
 public class PlayerMovement : MonoBehaviour
 {
     #region Movement Variables
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private GameObject player;
     
     private float playerSpeed = 0f;
     public float walkSpeed = 0f;
     public float sprintSpeed = 0f;
     private KeyCode sprintKey = KeyCode.LeftShift;
     #endregion Movement Variables
-    
+    public static bool loaded = false;
     #region Jump Variables
     public float  jumpHeight;
     public float gravity = -9.81f;
@@ -35,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKey(sprintKey))
+        if (Input.GetKey(sprintKey) && isGrounded)
         {
             playerSpeed = sprintSpeed;
         }
@@ -76,14 +78,30 @@ public class PlayerMovement : MonoBehaviour
 
         direction = transform.right * x + transform.forward * z;
 
+        if (!loaded)
+        {
+            StartCoroutine(OnLoad());
+        }
         
-        characterController.Move(direction * (playerSpeed * Time.deltaTime));
-
-        velocity.y += gravity * Time.deltaTime;
-
-        characterController.Move(velocity * Time.deltaTime);
-     
+        if (loaded)
+        {
+            characterController.Move(direction * (playerSpeed * Time.deltaTime));
+            velocity.y += gravity * Time.deltaTime;
+        
+            characterController.Move(velocity * Time.deltaTime);
+        }
+       
+    }
+    
+    IEnumerator OnLoad()
+    {
+        characterController.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        characterController.enabled = true;
+        loaded = true;
 
 
     }
+    
+    
 }

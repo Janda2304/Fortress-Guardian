@@ -226,6 +226,8 @@ namespace BayatGames.SaveGameFree
 		/// </summary>
 		public bool loadOnEnable = false;
 
+
+		
 		protected virtual void Awake ()
 		{
 			if ( resetBlanks )
@@ -271,6 +273,7 @@ namespace BayatGames.SaveGameFree
 
 		protected virtual void Start ()
 		{
+			Load();
 			if ( loadOnStart )
 			{
 				Load ();

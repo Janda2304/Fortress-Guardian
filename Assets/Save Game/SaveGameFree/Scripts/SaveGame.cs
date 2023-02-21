@@ -592,6 +592,7 @@ namespace BayatGames.SaveGameFree
         /// Loads data using identifier.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> the save slot to load from</param>
         /// <param name="defaultValue">Default Value.</param>
         /// <param name="encode">Load encrypted data? (set it to true if you have used encryption in save)</param>
         /// <param name="password">Encryption Password.</param>
@@ -626,7 +627,7 @@ namespace BayatGames.SaveGameFree
                 {
                     default:
                     case SaveGamePath.PersistentDataPath:
-                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" /*+ $"/Save{saveSlot}/"*/, identifier);
+                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" + $"/Save{saveSlot}/", identifier);
                         break;
                     case SaveGamePath.DataPath:
                         filePath = string.Format("{0}/{1}", Application.dataPath + "/Saves/", identifier);
@@ -638,7 +639,7 @@ namespace BayatGames.SaveGameFree
                 filePath = identifier;
             }
 #if !UNITY_SAMSUNGTV && !UNITY_TVOS && !UNITY_WEBGL
-            if (!Exists(filePath, path))
+            if (!Exists(filePath, saveSlot, path))
 #else
 			if ( !Exists ( filePath, path ) )
 #endif
@@ -731,21 +732,24 @@ namespace BayatGames.SaveGameFree
         /// Checks whether the specified identifier exists or not.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
-        public static bool Exists(string identifier)
+        /// <param name="saveSlot"> the save slot to loadd from</param>
+        public static bool Exists(string identifier, int saveSlot)
         {
-            return Exists(identifier, SavePath);
+            return Exists(identifier, saveSlot, SavePath);
         }
 
         /// <summary>
         /// Checks whether the specified identifier exists or not.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
+        /// <param name="saveSlot"> The save slot to load from</param>
         /// <param name="path">Path.</param>
         /// <param name="web">Check in Web?</param>
         /// <param name="webUsername">Web username.</param>
         /// <param name="webPassword">Web password.</param>
         /// <param name="webURL">Web URL.</param>
-        public static bool Exists(string identifier, SaveGamePath path)
+        public static bool Exists(string identifier, int saveSlot, SaveGamePath path)
         {
             if (string.IsNullOrEmpty(identifier))
             {
@@ -758,7 +762,7 @@ namespace BayatGames.SaveGameFree
                 {
                     default:
                     case SaveGamePath.PersistentDataPath:
-                        filePath = string.Format("{0}/{1}", Application.persistentDataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" + $"Save{saveSlot}", identifier);
                         break;
                     case SaveGamePath.DataPath:
                         filePath = string.Format("{0}/{1}", Application.dataPath, identifier);
@@ -801,17 +805,18 @@ namespace BayatGames.SaveGameFree
         /// Delete the specified identifier.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
-        public static void Delete(string identifier)
+        public static void Delete(string identifier, int saveSlot)
         {
-            Delete(identifier, SavePath);
+            Delete(identifier, saveSlot, SavePath);
         }
 
         /// <summary>
         /// Delete the specified identifier and path.
         /// </summary>
         /// <param name="identifier">Identifier.</param>
+        /// <param name="saveSlot"> the save slot to load from </param>
         /// <param name="path">Path.</param>
-        public static void Delete(string identifier, SaveGamePath path)
+        public static void Delete(string identifier, int saveSlot, SaveGamePath path)
         {
             if (string.IsNullOrEmpty(identifier))
             {
@@ -824,10 +829,10 @@ namespace BayatGames.SaveGameFree
                 {
                     default:
                     case SaveGamePath.PersistentDataPath:
-                        filePath = string.Format("{0}/{1}", Application.persistentDataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" +$"/Save{saveSlot}/", identifier);
                         break;
                     case SaveGamePath.DataPath:
-                        filePath = string.Format("{0}/{1}", Application.dataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.dataPath + "/Saves/" +$"/Save{saveSlot}/", identifier);
                         break;
                 }
             }
@@ -835,7 +840,7 @@ namespace BayatGames.SaveGameFree
             {
                 filePath = identifier;
             }
-            if (!Exists(filePath, path))
+            if (!Exists(filePath, saveSlot,  path))
             {
                 return;
             }
@@ -938,9 +943,9 @@ namespace BayatGames.SaveGameFree
         /// Retrieves files from the save path home.
         /// </summary>
         /// <returns></returns>
-        public static FileInfo[] GetFiles()
+        public static FileInfo[] GetFiles(int saveSlot)
         {
-            return GetFiles(string.Empty, SavePath);
+            return GetFiles(string.Empty, saveSlot, SavePath);
         }
 
         /// <summary>
@@ -948,18 +953,19 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns></returns>
-        public static FileInfo[] GetFiles(string identifier)
+        public static FileInfo[] GetFiles(string identifier, int saveSlot)
         {
-            return GetFiles(identifier, SavePath);
+            return GetFiles(identifier, saveSlot, SavePath);
         }
 
         /// <summary>
         /// Retrieves files from the given directory path.
         /// </summary>
         /// <param name="identifier"></param>
+        /// <param name="saveSlot"> the save slot to load from</param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static FileInfo[] GetFiles(string identifier, SaveGamePath path)
+        public static FileInfo[] GetFiles(string identifier, int saveSlot, SaveGamePath path)
         {
             if (string.IsNullOrEmpty(identifier))
             {
@@ -972,10 +978,10 @@ namespace BayatGames.SaveGameFree
                 {
                     default:
                     case SaveGamePath.PersistentDataPath:
-                        filePath = string.Format("{0}/{1}", Application.persistentDataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" +$"/Save{saveSlot}/", identifier);
                         break;
                     case SaveGamePath.DataPath:
-                        filePath = string.Format("{0}/{1}", Application.dataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.dataPath + "/Saves/" +$"/Save{saveSlot}/", identifier);
                         break;
                 }
             }
@@ -984,7 +990,7 @@ namespace BayatGames.SaveGameFree
                 filePath = identifier;
             }
             FileInfo[] files = new FileInfo[0];
-            if (!Exists(filePath, path))
+            if (!Exists(filePath, saveSlot,  path))
             {
                 return files;
             }
@@ -1000,9 +1006,9 @@ namespace BayatGames.SaveGameFree
         /// Retrieves directories from the save path home.
         /// </summary>
         /// <returns></returns>
-        public static DirectoryInfo[] GetDirectories()
+        public static DirectoryInfo[] GetDirectories(int saveSlot)
         {
-            return GetDirectories(string.Empty, SavePath);
+            return GetDirectories(string.Empty, saveSlot,  SavePath);
         }
 
         /// <summary>
@@ -1010,18 +1016,19 @@ namespace BayatGames.SaveGameFree
         /// </summary>
         /// <param name="identifier"></param>
         /// <returns></returns>
-        public static DirectoryInfo[] GetDirectories(string identifier)
+        public static DirectoryInfo[] GetDirectories(string identifier, int saveSlot)
         {
-            return GetDirectories(identifier, SavePath);
+            return GetDirectories(identifier, saveSlot, SavePath);
         }
 
         /// <summary>
         /// Retrieves directories from the given directory path.
         /// </summary>
         /// <param name="identifier"></param>
+        /// <param name="saveSlot"> the save slot to load from</param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static DirectoryInfo[] GetDirectories(string identifier, SaveGamePath path)
+        public static DirectoryInfo[] GetDirectories(string identifier, int saveSlot, SaveGamePath path)
         {
             if (string.IsNullOrEmpty(identifier))
             {
@@ -1034,10 +1041,10 @@ namespace BayatGames.SaveGameFree
                 {
                     default:
                     case SaveGamePath.PersistentDataPath:
-                        filePath = string.Format("{0}/{1}", Application.persistentDataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.persistentDataPath + "/Saves/" + $"/Save{saveSlot}/", identifier);
                         break;
                     case SaveGamePath.DataPath:
-                        filePath = string.Format("{0}/{1}", Application.dataPath, identifier);
+                        filePath = string.Format("{0}/{1}", Application.dataPath + "/Saves/" + $"/Save{saveSlot}/", identifier);
                         break;
                 }
             }
@@ -1046,7 +1053,7 @@ namespace BayatGames.SaveGameFree
                 filePath = identifier;
             }
             DirectoryInfo[] directories = new DirectoryInfo[0];
-            if (!Exists(filePath, path))
+            if (!Exists(filePath, saveSlot,  path))
             {
                 return directories;
             }

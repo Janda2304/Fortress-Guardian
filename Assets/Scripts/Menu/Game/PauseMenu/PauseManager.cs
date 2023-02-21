@@ -63,7 +63,7 @@ public class PauseManager : MonoBehaviour
         isPaused = true;
     }
     
-    private void Resume()
+    public void Resume()
     {
         pauseMenu.SetActive(false);
         pause.SetActive(false);

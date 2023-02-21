@@ -3364,7 +3364,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.6330366, z: -1.1473083, w: 0.23500443}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &605592215
@@ -7780,7 +7780,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.6330366, z: -1.1473083, w: 0.23500443}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1246296150
@@ -10097,7 +10097,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.6330366, z: -1.1473083, w: 0.23500443}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1488177658
@@ -11344,6 +11344,18 @@ MonoBehaviour:
       - m_Target: {fileID: 994776342}
         m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
         m_MethodName: MouseClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 537840770}
+        m_TargetAssemblyTypeName: MenuButtonControl, Assembly-CSharp
+        m_MethodName: Continue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14198,7 +14210,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0.6330366, z: -1.1473083, w: 0.23500443}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1949697617

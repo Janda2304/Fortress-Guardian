@@ -9397,7 +9397,7 @@ MonoBehaviour:
   waveNumberText: {fileID: 1232960352}
   waveActiveErrorText: {fileID: 143725221}
   waveDuration: 75
-  waveCount: 5
+  waveCount: 0
   waveValueIncrease: 5
   waveActive: 0
   enemies:
@@ -17415,9 +17415,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6651398735257416823}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.9, y: 3.79, z: -51.6}
-  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 38, y: 3.14, z: -40.19}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6651398735563878455}
@@ -17541,7 +17541,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3e45325f000f55d4f81d863523207a87, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

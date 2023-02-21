@@ -61,7 +61,7 @@ public class MenuButtonControl : MonoBehaviour
 
     public void Continue()
     {
-        
+        SceneManager.LoadScene("ForestMap");
     }
 
 }

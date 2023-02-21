@@ -18,7 +18,7 @@ public class WaveSpawner : MonoBehaviour
     private float waveTimer;
     private float spawnInterval;
     private float spawnTimer;
-    [SerializeField] private float waveCount;
+    [SerializeField][Tooltip("How many waves this map should have")] private int waveCount;
     [SerializeField][Tooltip("How much value will add up for every wave")] private int waveValueIncrease;
     /*[HideInInspector]*/ public bool waveActive;
     private int waveValue;

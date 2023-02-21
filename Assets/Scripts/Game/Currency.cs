@@ -20,7 +20,6 @@ public class Currency : MonoBehaviour
     private void Start()
     {
         scene = SceneManager.GetSceneByName("Game");
-        Load();
         #region difficulty
         string difficulty = PlayerPrefs.GetString("difficulty");
         if (difficulty == "Novice")
@@ -107,12 +106,6 @@ public class Currency : MonoBehaviour
         SaveGame.Save("Coins", Coins, 1);
         SaveGame.Save("Health", Health, 1);
     }
-    
-    public static void Load()
-    {
-        Coins = SaveGame.Load<int>("Coins", 1);
-        Health = SaveGame.Load<float>("Health", 1);
-    }
-    
-    
+
+
 }
