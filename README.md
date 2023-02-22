@@ -9,5 +9,3 @@
 
 ## Casova Narocnost
 ### Předpokládaná časová náročnost projektu Fortress Guardian je odhadovaná nad 150 hodin (z toho minimálně 12 hodin nadávání na to že Unity je trash a nefunguje)
-
-
