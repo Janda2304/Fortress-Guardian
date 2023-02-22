@@ -15,15 +15,10 @@ namespace FG_BuildingSystem
         [SerializeField] private LayerMask buildingLayer;
         [SerializeField][Range(0.1f, 15)][Tooltip("A range in what the popup will show")] private float range = 5f;
         private int sellPrice;
-        [SerializeField] private BuildingPlacementControl _control; /*till i make a better way to get prices*/
-        [SerializeField] private Currency _currency; //TODO: make a new currency system
-        
+
         private void Start()
         {
             playerCamera = FindObjectOfType<Camera>();
-            _control = FindObjectOfType<BuildingPlacementControl>();
-            _currency = FindObjectOfType<Currency>();
-            sellPrice = _control.prices[building.name];
         } 
 
         void Update()

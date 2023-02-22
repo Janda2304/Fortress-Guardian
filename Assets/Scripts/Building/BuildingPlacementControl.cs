@@ -2,6 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 
 namespace FG_BuildingSystem
 {
@@ -22,8 +23,7 @@ namespace FG_BuildingSystem
     [SerializeField] private PauseManager _pause;
 
     #region Private and Hidden Variables
-   
-    public /* till i make a new system for pricing then it can be private*/ Dictionary<string, int> prices = new Dictionary<string, int>();
+    
     [HideInInspector] public int cost;
     [HideInInspector] public byte index = 0;
     [HideInInspector] public bool isBuilding = false;
@@ -36,8 +36,7 @@ namespace FG_BuildingSystem
     #region Dictionary Data Setup
     private void Start()
     {
-        prices.Add("Fence", 100);
-        prices.Add("Cannon", 200);
+      
 
     }
     #endregion Dictionary Data Setup    
@@ -114,7 +113,7 @@ namespace FG_BuildingSystem
             isBuilding = true;
             this.index = index;
             currentBuilding = building[index];
-            cost = prices[building[index].name];
+            //cost = price;
             _previewControl.ShowPreview();
         }
         else if (isBuilding)

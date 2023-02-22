@@ -3,28 +3,33 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class EnemyHealthBar : MonoBehaviour
+namespace FG_EnemyAI
 {
-    [SerializeField] private Image healthBar;
-    [SerializeField] private TMP_Text healthNumber;
-    [SerializeField] private EnemyAI _enemy;
-    [SerializeField] private Transform healthBarRect;
-    [SerializeField] private Camera mainCamera;
-    private float fill;
-  
 
 
-    private void Start()
+    public class EnemyHealthBar : MonoBehaviour
     {
-        mainCamera = FindObjectOfType<Camera>();
-    }
+        [SerializeField] private Image healthBar;
+        [SerializeField] private TMP_Text healthNumber;
+        [SerializeField] private EnemyAI _enemy;
+        [SerializeField] private Transform healthBarRect;
+        [SerializeField] private Camera mainCamera;
+        private float fill;
 
-    private void Update()
-    {
-        fill = _enemy.health / _enemy.maxHealth;
-        healthBar.fillAmount = fill;
-        healthBarRect.LookAt(mainCamera.transform);
-        healthNumber.text = $"{_enemy.health}/{_enemy.maxHealth}";
+
+
+        private void Start()
+        {
+            mainCamera = FindObjectOfType<Camera>();
+        }
+
+        private void Update()
+        {
+            fill = _enemy.health / _enemy.maxHealth;
+            healthBar.fillAmount = fill;
+            healthBarRect.LookAt(mainCamera.transform);
+            healthNumber.text = $"{_enemy.health}/{_enemy.maxHealth}";
+        }
     }
 }
+

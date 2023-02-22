@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 60
+  buildingName: Fence
   health: 5
 --- !u!208 &1520063550569836454
 NavMeshObstacle:
@@ -152,8 +153,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   range: 3
-  _control: {fileID: 0}
-  _currency: {fileID: 0}
 --- !u!1 &1135106013817525302
 GameObject:
   m_ObjectHideFlags: 0

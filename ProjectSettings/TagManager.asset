@@ -12,6 +12,7 @@ TagManager:
   - Buildable
   - Bear
   - WaveSpawner
+  - bb
   layers:
   - Default
   - TransparentFX

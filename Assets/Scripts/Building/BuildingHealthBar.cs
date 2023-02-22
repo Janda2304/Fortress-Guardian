@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FG_BuildingSystem
+namespace FG_NewBuildingSystem
 {
     public class BuildingHealthBar : MonoBehaviour
     {

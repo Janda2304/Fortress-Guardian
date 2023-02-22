@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using BayatGames.SaveGameFree;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using FG_EnemyAI;
 
 public class Currency : MonoBehaviour
 {
@@ -98,14 +98,7 @@ public class Currency : MonoBehaviour
     {
         Health -= amount;
     }
-
-    public static void Save()
-    {
-        SaveGame.Encode = true;
-        
-        SaveGame.Save("Coins", Coins, 1);
-        SaveGame.Save("Health", Health, 1);
-    }
+    
 
 
 }

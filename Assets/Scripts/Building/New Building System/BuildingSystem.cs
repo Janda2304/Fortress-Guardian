@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace FG_NewBuildingSystem
 {
@@ -13,6 +12,7 @@ namespace FG_NewBuildingSystem
         [Header("Other")] 
         [SerializeField] private LayerMask ground;
         [SerializeField] private Camera playerCam;
+        [SerializeField] private BuildingSoundsControl _sounds;
         
         [Header("KeyCodes")]
         [SerializeField] private KeyCode[] buildKeys = {KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9};
@@ -25,6 +25,7 @@ namespace FG_NewBuildingSystem
         private bool haveMoney;
         private bool isColliding;
         private bool isBuildable;
+        
 
         private int index;
 
@@ -41,14 +42,14 @@ namespace FG_NewBuildingSystem
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 10, ground))
                 {
-                    buildings[index].preview.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
+                    buildings[index].preview.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
                
                 
                 }
 
                 if (Input.GetKey(KeyCode.R))
                 {
-                    buildings[index].preview.Rotate(0, 3f, 0);
+                    buildings[index].preview.transform.Rotate(0, 3f, 0);
                 }
            
            
@@ -58,8 +59,8 @@ namespace FG_NewBuildingSystem
         void Update()
         {
             #region Checks
-            isGrounded = Physics.Raycast(buildings[index].preview.position, Vector3.down, 1f);
-            isColliding = Physics.CheckBox(buildings[index].preview.position, transform.localScale, Quaternion.identity, LayerMask.GetMask("Buildable", "Building", "Castle", "Enemy", "Player"));
+            isGrounded = Physics.Raycast(buildings[index].preview.transform.position, Vector3.down, 1f);
+            isColliding = Physics.CheckBox(buildings[index].preview.transform.position, transform.localScale, Quaternion.identity, LayerMask.GetMask("Buildable", "Building", "Castle", "Enemy", "Player"));
             haveMoney = buildings[index].cost <= Currency.Coins;
             if (isGrounded && !isColliding && haveMoney && isBuilding)
             {
@@ -70,20 +71,42 @@ namespace FG_NewBuildingSystem
                 isBuildable = false;
             }
             #endregion
-            SetupBuild(0);
-            SetupBuild(1);
 
+            buildings[index].PreviewMeshRenderer.material = !isBuildable ? buildings[index].cantBuild : buildings[index].canBuild;
+            if (Input.GetKeyDown(buildKeys[0]))
+            {
+                SetupBuild(0);
+            }
+           
+            if (Input.GetKeyDown(buildKeys[1]))
+            {
+                SetupBuild(1);
+            }
+
+            #region build
+
+            if (Input.GetButtonDown("Fire1") && isBuildable)
+            {
+                Building building = buildings[index];
+                building.Build();
+                isBuilding = false;
+                _sounds.PlayBuildingSound();
+            }
+            else if (Input.GetButtonDown("Fire1") && !isBuildable && isBuilding)
+            {
+                _sounds.PlayErrorSound();
+            }
+
+            #endregion
 
         }
+        
         
         #region Setup Build
         private void SetupBuild(int i)
         {
             Building building = buildings[i];
-            
-            if (Input.GetKeyDown(buildKeys[i]))
-            {
-               
+            index = i;
                 if (isBuilding)
                 {
                     building.HidePreview();
@@ -94,27 +117,22 @@ namespace FG_NewBuildingSystem
                     building.ShowPreview();
                     isBuilding = true;
                 }
-            }
-            
-            if (Input.GetButtonDown("Fire1") && isBuildable)
-            {
-                building.Build();
-                Currency.Coins -= building.cost;
-                isBuilding = false;
-            }
+
+             
         }
         #endregion
     }
     
     #region Building Class
-    [System.Serializable]
+    [Serializable]
     public class Building 
     {
         public GameObject building;
         [Header("Preview")]
-        [SerializeField] private Material canBuild;
-        [SerializeField] private Material cantBuild;
-        public Transform preview;
+        public Material canBuild;
+        public Material cantBuild;
+        public MeshRenderer PreviewMeshRenderer;
+        public GameObject preview;
         [Header("Meshes")]
         public Mesh previewMesh;
         public MeshFilter previewFilter;
@@ -122,14 +140,13 @@ namespace FG_NewBuildingSystem
         public Mesh rangePreviewMesh;
         [Header("Price")]
         public int cost;
-        
+
         public void Build()
         {
             GameObject curBuilding = building;
-            MonoBehaviour.Instantiate(curBuilding, preview.position, preview.rotation);
+            MonoBehaviour.Instantiate(curBuilding, preview.transform.position, preview.transform.rotation);
             Currency.PayCoins(cost);
             HidePreview();
-            //play sound - BuildingSystemSounds script
         }
         
         public void ShowPreview()
@@ -144,7 +161,7 @@ namespace FG_NewBuildingSystem
         public void HidePreview()
         {
             preview.gameObject.SetActive(false);
-            preview.rotation = Quaternion.identity;
+            preview.transform.rotation = Quaternion.identity;
         }
     }
     #endregion
