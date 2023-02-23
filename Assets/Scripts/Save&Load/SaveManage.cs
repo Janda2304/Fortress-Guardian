@@ -7,7 +7,7 @@ using System.Text;
 using BayatGames.SaveGameFree;
 using FG_NewBuildingSystem;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 
 namespace FG_Saving
@@ -22,38 +22,69 @@ namespace FG_Saving
         public List<Quaternion> buildingRotations = new List<Quaternion>();
         public BuildingData buildingData;
         private int buildIndex;
-        [Header("Currency")] 
+        [Header("LevelData")] 
         public CurrencyData _currencyData;
+        public LevelData _levelData;
+        private bool sceneLoaded;
         [Header("Others")] 
         public PauseManager _pause;
+
+        public static int saveFile = 0;
       
 
 
         private void Start()
         {
             SaveGame.Encode = true;
+            saveFile = PlayerPrefs.GetInt("SaveFile");
+            PlayerPrefs.SetInt("SaveFile", saveFile);
         }
 
         public void Save()
         {
             SaveBuildings();
+            SaveLevel();
             SaveCurrencies();
         }
 
+
+
+        
         public void Load()
         {
-            LoadBuildings();
-            LoadCurrencies();
-            _pause.Resume();
+            if (SaveGame.Exists("LevelData", saveFile))
+            {
+                LoadLevel();
+            }
+
+
+            if (SaveGame.Exists("CurrencyData", saveFile))
+            {
+                LoadCurrencies();
+            }
+
+
+            if (SaveGame.Exists("BuildingsData", saveFile))
+            {
+                LoadBuildings();
+            }
+
+            if (SceneManager.GetActiveScene().name != "MainMenu")
+            {
+                _pause.Resume();
+            }
+         
             PlayerMovement.loaded = true;
         }
+
+      
 
         
         #region Buildings
         public void SaveBuildings()
         {
             buildingData.SaveData();
-            SaveGame.Save("BuildingsData", buildingData, 1);
+            SaveGame.Save("BuildingsData", buildingData, saveFile);
         }
         
         
@@ -63,7 +94,7 @@ namespace FG_Saving
             buildings = GameObject.FindGameObjectsWithTag("Building").ToList();
             buildingPositions.Clear();
             buildingRotations.Clear();
-            BuildingData bd = SaveGame.Load<BuildingData>("BuildingsData", 1);
+            BuildingData bd = SaveGame.Load<BuildingData>("BuildingsData", saveFile);
             buildIndex = 0; 
             foreach (var building in buildings)
             {
@@ -97,17 +128,34 @@ namespace FG_Saving
         public void SaveCurrencies()
         {
             _currencyData.SaveCurrencyData();
-            SaveGame.Save("CurrencyData", _currencyData, 1);
+            SaveGame.Save("CurrencyData", _currencyData, saveFile);
         }
     
         public void LoadCurrencies()
         {
             _currencyData.LoadCurrencyData();
-            CurrencyData currencyData = SaveGame.Load<CurrencyData>("CurrencyData", 1);
+            CurrencyData currencyData = SaveGame.Load<CurrencyData>("CurrencyData", saveFile);
             Currency.Coins = currencyData.coins;
             Currency.Health = currencyData.health;
         }
 
+        #endregion
+        
+        #region LevelData
+
+        public void SaveLevel()
+        {
+            _levelData.SaveLevelData();
+            SaveGame.Save("LevelData", _levelData, saveFile);
+         
+        }
+        
+        public void LoadLevel()
+        {
+            LevelData levelData = SaveGame.Load<LevelData>("LevelData", saveFile);
+            levelData.LoadLevelData();
+        }
+        
         #endregion
         
     }

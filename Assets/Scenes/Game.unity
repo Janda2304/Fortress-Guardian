@@ -13270,6 +13270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1755259330}
   - component: {fileID: 1755259332}
+  - component: {fileID: 1755259333}
   m_Layer: 0
   m_Name: Saving Manager
   m_TagString: Untagged
@@ -13310,7 +13311,21 @@ MonoBehaviour:
   buildingRotations: []
   buildingData: {fileID: 11400000, guid: 11d30ab1bd5e0af4c9b0244d83a935a5, type: 2}
   _currencyData: {fileID: 11400000, guid: c2b8fe9c557a8d54ab5500fb6bb08684, type: 2}
+  _levelData: {fileID: 11400000, guid: fd368e9668ac37e40833a2aa2a94b5c2, type: 2}
   _pause: {fileID: 1688923355}
+--- !u!114 &1755259333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755259327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22693cd25a53d5a42af3d32a4ca2f607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _save: {fileID: 1755259332}
 --- !u!1 &1796524543
 GameObject:
   m_ObjectHideFlags: 0

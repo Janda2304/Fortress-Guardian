@@ -110,7 +110,7 @@ namespace FG_EnemyAI
         {
             Collider target = hitColliders[0];
             agent.SetDestination(target.transform.position);
-            if (target.gameObject.CompareTag("Building"))
+            if (target.gameObject.CompareTag("Building") && hitColliders.Count > 0)
             {
                 target.GetComponentInParent<BuildingBehaviour>().TakeDamage(damage);
             }

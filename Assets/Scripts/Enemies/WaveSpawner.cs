@@ -17,6 +17,7 @@ namespace FG_EnemyAI
         [SerializeField] private TMP_Text waveActiveErrorText;
 
         [Header("Wave Settings")] private int currWave;
+        public static int currWaveStatic;
         public int waveDuration;
         private float waveTimer;
         private float spawnInterval;
@@ -47,6 +48,11 @@ namespace FG_EnemyAI
 
         private void Update()
         {
+            currWaveStatic = currWave;
+            if (currWaveStatic != currWave)
+            {
+                currWave = currWaveStatic;
+            }
             foreach (var enemy in enemies)
             {
                 if (enemy.firstAppear == currWave && !spawnableEnemies.Contains(enemy))

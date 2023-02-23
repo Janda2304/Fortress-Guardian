@@ -1,3 +1,6 @@
+using System.Collections;
+using FG_Saving;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,7 +10,12 @@ public class MenuButtonControl : MonoBehaviour
     [SerializeField] private GameObject newGameMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject exitMenu;
+    [SerializeField] private GameObject loadMenu;
     private GameObject curMenu;
+
+    public TMP_Text resetWarningText;
+    
+    private int saveFilesCount = 0;
 
 
     private void Start()
@@ -15,7 +23,10 @@ public class MenuButtonControl : MonoBehaviour
         settingsMenu.SetActive(false);
         newGameMenu.SetActive(false);
         exitMenu.SetActive(false);
+        loadMenu.SetActive(false);
         mainMenu.SetActive(true);
+        resetWarningText.gameObject.SetActive(false);
+      
         curMenu = mainMenu;
     }
     
@@ -55,12 +66,46 @@ public class MenuButtonControl : MonoBehaviour
 
     public void StartGame()
     {
+        saveFilesCount += 1;
+        SaveManage.saveFile += 1;
+        
+        if (SaveManage.saveFile > 3)
+        {
+            SaveManage.saveFile = 1;
+        }
+        PlayerPrefs.SetInt("SaveFile", SaveManage.saveFile);
+        PlayerPrefs.SetInt("SaveFilesCount", saveFilesCount);
         SceneManager.LoadScene("Game");
+        
+        
+        
+    }
+
+    public void LoadGame()
+    {
+        curMenu.SetActive(false);
+        loadMenu.SetActive(true);
+        curMenu = loadMenu;
     }
 
     public void Continue()
     {
-        SceneManager.LoadScene("ForestMap");
+        SceneManager.LoadScene("Game");
+    }
+
+    public void ResetSettings()
+    { 
+        PlayerPrefs.DeleteAll();
+    }
+
+    public void ShowWarning()
+    {
+        resetWarningText.gameObject.SetActive(true);
+    }
+    
+    public void HideWarning()
+    {
+        resetWarningText.gameObject.SetActive(false);
     }
 
 }
