@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using BayatGames.SaveGameFree;
+using FG_EnemyAI;
 using FG_NewBuildingSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +18,7 @@ namespace FG_Saving
         [Header("Buildings")]
         public GameObject cannon;
         public GameObject fence;
-        public static List<GameObject> buildings = new List<GameObject>();
+        public List<GameObject> buildings = new List<GameObject>();
         public List<Vector3> buildingPositions = new List<Vector3>();
         public List<Quaternion> buildingRotations = new List<Quaternion>();
         public BuildingData buildingData;
@@ -26,8 +27,10 @@ namespace FG_Saving
         public CurrencyData _currencyData;
         public LevelData _levelData;
         private bool sceneLoaded;
-        [Header("Others")] 
+        [Header("Other scripts")] 
         public PauseManager _pause;
+        public WaveSpawner _waveSpawner;
+        
 
         public static int saveFile = 0;
       
@@ -42,9 +45,13 @@ namespace FG_Saving
 
         public void Save()
         {
-            SaveBuildings();
-            SaveLevel();
-            SaveCurrencies();
+            if (!_waveSpawner.waveActive)
+            {
+                SaveBuildings();
+                SaveLevel();
+                SaveCurrencies();
+            }
+        
         }
 
 
@@ -52,29 +59,33 @@ namespace FG_Saving
         
         public void Load()
         {
-            if (SaveGame.Exists("LevelData", saveFile))
+            if (!_waveSpawner.waveActive)
             {
-                LoadLevel();
-            }
+                if (SaveGame.Exists("LevelData", saveFile))
+                {
+                    LoadLevel();
+                }
 
 
-            if (SaveGame.Exists("CurrencyData", saveFile))
-            {
-                LoadCurrencies();
-            }
+                if (SaveGame.Exists("CurrencyData", saveFile))
+                {
+                    LoadCurrencies();
+                }
 
 
-            if (SaveGame.Exists("BuildingsData", saveFile))
-            {
-                LoadBuildings();
-            }
+                if (SaveGame.Exists("BuildingsData", saveFile))
+                {
+                    LoadBuildings();
+                }
 
-            if (SceneManager.GetActiveScene().name != "MainMenu")
-            {
-                _pause.Resume();
-            }
+                if (SceneManager.GetActiveScene().name != "MainMenu")
+                {
+                    _pause.Resume();
+                }
          
-            PlayerMovement.loaded = true;
+                PlayerMovement.loaded = true;
+            }
+            
         }
 
       

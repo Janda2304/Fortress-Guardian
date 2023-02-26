@@ -6,9 +6,13 @@ using UnityEngine;
 public class AutoLoad : MonoBehaviour
 {
     [SerializeField] private SaveManage _save;
+    public static bool Enabled = true;
     void Start()
     {
-        _save.Load();
+        if (AutoLoad.Enabled)
+        {
+            _save.Load();
+        }
     }
 
 }

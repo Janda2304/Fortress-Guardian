@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.486
       objectReference: {fileID: 0}
+    - target: {fileID: 1987292497973317616, guid: d39515c42a03a98449a9768c889775d5, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2347955222014238391, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.9848078
@@ -50,6 +54,10 @@ PrefabInstance:
     - target: {fileID: 3575985460318489763, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: m_Name
       value: Cannon
+      objectReference: {fileID: 0}
+    - target: {fileID: 5368147583232754351, guid: d39515c42a03a98449a9768c889775d5, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6750547801310066604, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: Priority
@@ -118,6 +126,18 @@ PrefabInstance:
     - target: {fileID: 7113149933815899539, guid: d39515c42a03a98449a9768c889775d5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311484345160387202, guid: d39515c42a03a98449a9768c889775d5, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164491889638752394, guid: d39515c42a03a98449a9768c889775d5, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224013363460370826, guid: d39515c42a03a98449a9768c889775d5, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d39515c42a03a98449a9768c889775d5, type: 3}

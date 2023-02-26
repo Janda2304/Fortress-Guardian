@@ -64,7 +64,7 @@ public class Tips : MonoBehaviour
     {
         if (!returningPlayer)  yield return new WaitForSeconds(45);
 
-            background.gameObject.SetActive(false);
+        background.gameObject.SetActive(false);
         hintText.gameObject.SetActive(false);
         if (PlayerPrefs.GetBool("hints") == true)
         {

@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using FG_EnemyAI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class SoundsManager : MonoBehaviour
 {
@@ -8,6 +12,9 @@ public class SoundsManager : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioClip gameOver;
     [SerializeField] private AudioClip[] musicClips;
+    [SerializeField] private AudioClip bossMusic;
+
+    [SerializeField] private WaveSpawner _wave;
     
 
     public void GameOverSound()
@@ -19,9 +26,17 @@ public class SoundsManager : MonoBehaviour
     {
         StartCoroutine(PlayRandom());
     }
-    
-    
-    
+
+    private void FixedUpdate()
+    {
+        if (_wave.currWave == 10 && musicSource.clip != bossMusic && SceneManager.GetActiveScene().name == "ForestMap")
+        {
+            musicSource.clip = bossMusic;
+            musicSource.Play();
+        }
+    }
+
+
     IEnumerator PlayRandom()
     {
         while (true)

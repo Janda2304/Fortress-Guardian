@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 
@@ -16,7 +17,8 @@ namespace FG_EnemyAI
         [SerializeField] private TMP_Text waveNumberText;
         [SerializeField] private TMP_Text waveActiveErrorText;
 
-        [Header("Wave Settings")] private int currWave;
+        [Header("Wave Settings")] 
+        public int currWave;
         public static int currWaveStatic;
         public int waveDuration;
         private float waveTimer;
@@ -39,6 +41,11 @@ namespace FG_EnemyAI
         public Transform[] spawnLocation;
         public int spawnIndex;
         public List<GameObject> spawnedEnemies = new List<GameObject>();
+        [Header("Win")]
+        public GameObject winScreen;
+        [Header("Other Scripts")] [SerializeField]
+        private WinScreen _win;
+        
 
         private void Start()
         {
@@ -53,6 +60,9 @@ namespace FG_EnemyAI
             {
                 currWave = currWaveStatic;
             }
+            
+            #region Enemy First Appear
+            //adds enemies to the spawnable list based on theirs first appear wave
             foreach (var enemy in enemies)
             {
                 if (enemy.firstAppear == currWave && !spawnableEnemies.Contains(enemy))
@@ -60,33 +70,53 @@ namespace FG_EnemyAI
                     spawnableEnemies.Add(enemy);
                 }
             }
-
+            #endregion
+            
+            #region Wave Timer
             if (!waveActive)
             {
                 waveTimerText.text = "Wave not active";
             }
-            else
+            else if (currWave != 10)
             {
                 waveTimerText.text = $"{decimal.Round(Convert.ToDecimal(waveTimer), 1)}s";
             }
-
+            #endregion
+            
+            #region Start Wave
+            //starts wave on key press
             waveNumberText.text = $"{currWave}/{waveCount}";
             if (Input.GetKeyDown(KeyCode.L) && !waveActive && currWave < waveCount)
             {
+              
                 waveActive = true;
-                currWave++;
+                currWave++; 
                 GenerateWave();
             }
             else if (Input.GetKeyDown(KeyCode.L) && waveActive)
             {
                 StartCoroutine(ErrorPopup());
             }
-
+            #endregion
+            
+            #region End Wave 
+            //end wave if all enemies are killed
             if (spawnedEnemies.Count == 0 && waveActive && waveTimer < waveDuration - spawnInterval)
             {
                 waveActive = false;
                 waveTimer = waveDuration;
             }
+            #endregion
+            
+            #region Win
+            if (currWave >= waveCount && spawnedEnemies.Count == 0 && !waveActive)
+            {
+                currWave = waveCount;
+                winScreen.SetActive(true);
+                _win.CustomOnEnable();
+            }
+            #endregion Win
+
 
 
 
@@ -145,8 +175,17 @@ namespace FG_EnemyAI
             waveValue = currWave * waveValueIncrease;
             GenerateEnemies();
 
-            spawnInterval = currWave / 1f;
-            waveTimer = waveDuration;
+            spawnInterval = currWave / 2f;
+            if (currWave == 10 && SceneManager.GetActiveScene().name == "ForestMap" )
+            {
+                waveTimer = 9999999999;
+                waveTimerText.text = "Infinite";
+            }
+            else
+            {
+                waveTimer = waveDuration;
+            }
+           
         }
 
         public void GenerateEnemies()
@@ -154,22 +193,30 @@ namespace FG_EnemyAI
 
 
             List<GameObject> generatedEnemies = new List<GameObject>();
-            while (waveValue > 0 || generatedEnemies.Count < 50)
+            if (currWave == 10 && SceneManager.GetActiveScene().name == "ForestMap")
             {
-                int randEnemyId = Random.Range(0, spawnableEnemies.Count);
-                int randEnemyCost = spawnableEnemies[randEnemyId].cost;
-
-                if (waveValue - randEnemyCost >= 0)
-                {
-                    generatedEnemies.Add(spawnableEnemies[randEnemyId].enemyPrefab);
-                    waveValue -= randEnemyCost;
-                }
-                else if (waveValue <= 0)
-                {
-                    break;
-                }
+                generatedEnemies.Add(enemies[3].enemyPrefab);
             }
+            else
+            {
+                while (waveValue > 0 || generatedEnemies.Count < 50)
+                {
+                    int randEnemyId = Random.Range(0, spawnableEnemies.Count);
+                    int randEnemyCost = spawnableEnemies[randEnemyId].cost;
+              
+                    if (waveValue - randEnemyCost >= 0)
+                    {
+                        generatedEnemies.Add(spawnableEnemies[randEnemyId].enemyPrefab);
+                        waveValue -= randEnemyCost;
+                    }
+                    else if (waveValue <= 0)
+                    {
+                        break;
+                    }
+                }
 
+            }
+            
             enemiesToSpawn.Clear();
             enemiesToSpawn = generatedEnemies;
         }
@@ -189,8 +236,7 @@ namespace FG_EnemyAI
         public GameObject enemyPrefab;
         public int cost;
 
-        [Tooltip(
-            "The wave in what will this enemy first appear, set to zero to have this enemy start spawning from the first wave")]
+        [Tooltip("The wave in what will this enemy first appear, set to zero to have this enemy start spawning from the first wave")]
         public int firstAppear;
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using FG_Saving;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -88,6 +89,8 @@ public class LoadMenuControl : MonoBehaviour
     public void LoadGame(int saveFile)
     {
         PlayerPrefs.SetInt("SaveFile", saveFile);
+        SaveManage.saveFile = saveFile;
+        AutoLoad.Enabled = true;
         SceneManager.LoadScene("Game");
     }
 }

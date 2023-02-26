@@ -13,7 +13,8 @@ namespace FG_NewBuildingSystem
         [SerializeField] private LayerMask ground;
         [SerializeField] private Camera playerCam;
         [SerializeField] private BuildingSoundsControl _sounds;
-        
+        [SerializeField][Range(0,10)] private float placeDistance = 10f;
+
         [Header("KeyCodes")]
         [SerializeField] private KeyCode[] buildKeys = {KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9};
         
@@ -21,13 +22,13 @@ namespace FG_NewBuildingSystem
 
         [Header("Checks")] 
         private bool isGrounded;
-        private bool isBuilding;
+        public bool isBuilding;
         private bool haveMoney;
         private bool isColliding;
         private bool isBuildable;
         
 
-        private int index;
+        public int index;
 
       
        
@@ -40,7 +41,7 @@ namespace FG_NewBuildingSystem
             {
                 Ray ray = playerCam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 10, ground))
+                if (Physics.Raycast(ray, out hit, placeDistance, ground))
                 {
                     buildings[index].preview.transform.position = new Vector3(hit.point.x, hit.point.y + 0.1f, hit.point.z);
                

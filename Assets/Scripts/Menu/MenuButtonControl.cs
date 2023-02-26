@@ -64,23 +64,8 @@ public class MenuButtonControl : MonoBehaviour
        
     }
 
-    public void StartGame()
-    {
-        saveFilesCount += 1;
-        SaveManage.saveFile += 1;
-        
-        if (SaveManage.saveFile > 3)
-        {
-            SaveManage.saveFile = 1;
-        }
-        PlayerPrefs.SetInt("SaveFile", SaveManage.saveFile);
-        PlayerPrefs.SetInt("SaveFilesCount", saveFilesCount);
-        SceneManager.LoadScene("Game");
-        
-        
-        
-    }
-
+    
+    
     public void LoadGame()
     {
         curMenu.SetActive(false);
@@ -90,7 +75,16 @@ public class MenuButtonControl : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadScene("Game");
+        saveFilesCount = PlayerPrefs.GetInt("SaveFilesCount");
+        if (saveFilesCount > 0)
+        {
+            AutoLoad.Enabled = true;
+            SceneManager.LoadScene("Game");
+        }
+        else
+        {
+            print("error, no save file found");
+        }
     }
 
     public void ResetSettings()

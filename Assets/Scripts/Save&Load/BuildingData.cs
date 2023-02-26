@@ -22,8 +22,9 @@ public class BuildingData : ScriptableObject
     savedBuildingRotations.Clear();
     savedBuildingHealth.Clear();
     
-    SaveManage.buildings = GameObject.FindGameObjectsWithTag("Building").ToList();
-    foreach (var building in SaveManage.buildings)
+    SaveManage build = FindObjectOfType<SaveManage>();
+    build.buildings = GameObject.FindGameObjectsWithTag("Building").ToList();
+    foreach (var building in build.buildings)
     {
       savedBuildings.Add(building.GetComponent<BuildingBehaviour>().buildingName);
       savedBuildingPositions.Add(building.transform.position);

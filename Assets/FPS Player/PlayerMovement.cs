@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (loaded)
         {
+            direction = Vector3.Normalize(direction);
             characterController.Move(direction * (playerSpeed * Time.deltaTime));
             velocity.y += gravity * Time.deltaTime;
         

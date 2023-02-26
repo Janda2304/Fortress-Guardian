@@ -13,19 +13,15 @@ public class RandomPlay : MonoBehaviour
     {
         StartCoroutine(PlayRandom());
     }
-    
-    IEnumerator PlayRandom()
+
+
+    private IEnumerator PlayRandom()
     {
-        while (true)
-        {
-                index = Random.Range(0, clips.Length);
-                audioSource.clip = clips[index];
-                audioSource.Play();
-                yield return new WaitForSeconds(clips[index].length);
-               
-            
-            
-        }
+        index = Random.Range(0, clips.Length);
+        audioSource.clip = clips[index];
+        audioSource.Play();
+        yield return new WaitForSeconds(clips[index].length);
+        StartCoroutine(PlayRandom());
     }
 
 }

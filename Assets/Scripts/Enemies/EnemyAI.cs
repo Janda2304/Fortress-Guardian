@@ -66,12 +66,7 @@ namespace FG_EnemyAI
             isAttacking = hitColliders.Count > 0;
             if (agent.isStopped && !isAttacking && !isDeath)
             {
-                animator.SetBool("Run", false);
-                animator.SetBool("Attack", false);
-                animator.SetBool("Idle", true);
-            }
-            else
-            {
+                agent.isStopped = false;
                 animator.SetBool("Run", true);
                 animator.SetBool("Attack", false);
                 animator.SetBool("Idle", false);
@@ -108,16 +103,20 @@ namespace FG_EnemyAI
 
         private void DealDamage()
         {
-            Collider target = hitColliders[0];
-            agent.SetDestination(target.transform.position);
-            if (target.gameObject.CompareTag("Building") && hitColliders.Count > 0)
+            if (hitColliders.Count > 0)
             {
-                target.GetComponentInParent<BuildingBehaviour>().TakeDamage(damage);
+                Collider target = hitColliders[0];
+                agent.SetDestination(target.transform.position);
+                if (target.gameObject.layer == 9 && hitColliders.Count > 0)
+                {
+                    target.GetComponentInParent<BuildingBehaviour>().TakeDamage(damage);
+                }
+                else
+                {
+                    Currency.TakeDamage(damage);
+                }
             }
-            else
-            {
-                Currency.TakeDamage(damage);
-            }
+            
         }
 
         private IEnumerator Death()
