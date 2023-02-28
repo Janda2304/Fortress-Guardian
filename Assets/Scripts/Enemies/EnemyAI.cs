@@ -124,6 +124,7 @@ namespace FG_EnemyAI
             isDeath = true;
             var o = gameObject;
             o.layer = 0;
+            gameObject.GetComponent<Collider>().enabled = false;
             animator.SetBool("Death", true);
             animator.SetBool("Run", false);
             animator.SetBool("Attack", false);

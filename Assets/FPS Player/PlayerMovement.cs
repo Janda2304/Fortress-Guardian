@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKey(sprintKey) && isGrounded)
+        if (Input.GetKey(sprintKey))
         {
             playerSpeed = sprintSpeed;
         }

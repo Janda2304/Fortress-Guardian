@@ -1348,10 +1348,10 @@ MonoBehaviour:
   destination: {x: 0, y: 0, z: 0}
   animator: {fileID: 7691923099652771475}
   deathAnimation: {fileID: 7400000, guid: 9d9a3edb5004347409571c6785e30e97, type: 3}
-  maxHealth: 30
+  maxHealth: 35
   health: 0
   damage: 2
-  moneyGain: 40
+  moneyGain: 50
   detectionRadius: 0.65
   isDeath: 0
 --- !u!135 &2426107617417240640

@@ -12,7 +12,8 @@ TagManager:
   - Buildable
   - Bear
   - WaveSpawner
-  - bb
+  - PlayerCamera
+  - BirdCamera
   layers:
   - Default
   - TransparentFX

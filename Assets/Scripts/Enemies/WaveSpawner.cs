@@ -13,9 +13,11 @@ namespace FG_EnemyAI
 
     public class WaveSpawner : MonoBehaviour
     {
-        [Header("UI")] [SerializeField] private TMP_Text waveTimerText;
+        [Header("UI")] 
+        [SerializeField] private TMP_Text waveTimerText;
         [SerializeField] private TMP_Text waveNumberText;
         [SerializeField] private TMP_Text waveActiveErrorText;
+        [SerializeField] private TMP_Text startWaveText;
 
         [Header("Wave Settings")] 
         public int currWave;
@@ -88,7 +90,7 @@ namespace FG_EnemyAI
             waveNumberText.text = $"{currWave}/{waveCount}";
             if (Input.GetKeyDown(KeyCode.L) && !waveActive && currWave < waveCount)
             {
-              
+                startWaveText.gameObject.SetActive(false);
                 waveActive = true;
                 currWave++; 
                 GenerateWave();
@@ -105,6 +107,7 @@ namespace FG_EnemyAI
             {
                 waveActive = false;
                 waveTimer = waveDuration;
+                startWaveText.gameObject.SetActive(true);
             }
             #endregion
             

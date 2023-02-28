@@ -1,4 +1,5 @@
 
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,8 +16,6 @@ namespace FG_EnemyAI
         [SerializeField] private Transform healthBarRect;
         [SerializeField] private Camera mainCamera;
         private float fill;
-
-
 
         private void Start()
         {
