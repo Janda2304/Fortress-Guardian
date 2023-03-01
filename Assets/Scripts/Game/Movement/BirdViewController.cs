@@ -4,78 +4,66 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class BirdViewController : MonoBehaviour
+
+namespace FG_Movement
 {
-   [SerializeField] private CharacterController character;
-   [SerializeField] private Camera birdCamera;
-   [SerializeField] private AudioListener birdListener;
-   [SerializeField] private GameObject player;
-   [SerializeField] private float speed;
-   [SerializeField] private float zoomSpeed;
-   private bool isBirdView;
+    public class BirdViewController : MonoBehaviour
+    {
+        [SerializeField] private CharacterController character;
+        [SerializeField] private Camera birdCamera;
+        [SerializeField] private AudioListener birdListener;
+        [SerializeField] private GameObject player;
+        [SerializeField] private float speed;
+        [SerializeField] private float zoomSpeed;
+        [SerializeField] private float zoomMin;
+        [SerializeField] private float zoomMax;
+        private bool isBirdView;
 
 
-   private void Start()
-   {
-       isBirdView = false;
-       birdCamera.enabled = false;
-       birdListener.enabled = false;
-       player.SetActive(true);
-   }
-
-   private void Update()
-   {
-       if (Input.GetKeyDown(KeyCode.F5) && !isBirdView)
-       {
-           isBirdView = true;
-           player.SetActive(false);
-           birdCamera.enabled = true;
-           birdListener.enabled = true;
-       
-       }
-       else if (Input.GetKeyDown(KeyCode.F5) && isBirdView)
-       {
-           isBirdView = false;
-           player.SetActive(true);
-           birdCamera.enabled = false;
-           birdListener.enabled = false;
-         
-       }
-     
-   }
-
-   private void FixedUpdate()
-   {
-      Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-      character.Move(move * (speed * Time.deltaTime));
-      
-      //a function for a zooming in and out by pressing Q and E
-        if (Input.GetKey(KeyCode.Q))
+        private void Start()
         {
-             birdCamera.fieldOfView = Mathf.Lerp(birdCamera.fieldOfView, 10, Time.deltaTime * zoomSpeed);
+            isBirdView = false;
+            birdCamera.enabled = false;
+            birdListener.enabled = false;
+            player.SetActive(true);
         }
-        if (Input.GetKey(KeyCode.E))
+
+        private void Update()
         {
-             birdCamera.fieldOfView = Mathf.Lerp(birdCamera.fieldOfView, 100, Time.deltaTime * zoomSpeed);
+            if (Input.GetKeyDown(KeyCode.F5) && !isBirdView)
+            {
+                isBirdView = true;
+                player.SetActive(false);
+                birdCamera.enabled = true;
+                birdListener.enabled = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.F5) && isBirdView)
+            {
+                isBirdView = false;
+                player.SetActive(true);
+                birdCamera.enabled = false;
+                birdListener.enabled = false;
+            }
         }
-     
 
+        private void FixedUpdate()
+        {
+            if (birdCamera.enabled)
+            {
+                Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                character.Move(move * (speed * Time.deltaTime));
 
+                if (Input.GetKey(KeyCode.Q))
+                {
+                    birdCamera.fieldOfView = Mathf.Lerp(birdCamera.fieldOfView, zoomMin, Time.deltaTime * zoomSpeed);
+                }
 
-
-      /* var direction = Vector3.zero;
- 
- 
-       float x = Input.GetAxisRaw("Horizontal");
-       float z = Input.GetAxisRaw("Vertical");
- 
- 
- 
-       direction = transform.right * x + transform.forward * z;
-       
-       character.Move(direction * (speed * Time.deltaTime));*/
-      
-       
-   }
-   
+                if (Input.GetKey(KeyCode.E))
+                {
+                    birdCamera.fieldOfView = Mathf.Lerp(birdCamera.fieldOfView, zoomMax, Time.deltaTime * zoomSpeed);
+                }
+            }
+           
+        }
+    }
 }

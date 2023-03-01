@@ -1,23 +1,20 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FG_NewBuildingSystem
 {
-
-
-    public class BuildingPopup : MonoBehaviour
+    public class UpgradePopup : MonoBehaviour
     {
         [SerializeField] private Canvas canvas;
+        [SerializeField] private BuildingBehaviour _building;
 
         private void Start()
         {
             canvas.worldCamera = FindObjectOfType<Camera>();
         }
-       public void Upgrade()
-       {
-           print("Upgrade");
-       }
+
+        private void OnMouseDown()
+        {
+            
+        }
     }
 }

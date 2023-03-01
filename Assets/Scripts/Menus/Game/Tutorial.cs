@@ -73,7 +73,6 @@ public class Tutorial : MonoBehaviour
                     background.gameObject.SetActive(false);
                     hintText.gameObject.SetActive(false);
                     hintContinueText.gameObject.SetActive(false);
-                    Destroy(hintContinueText);
                     i = 0;
                     
                 }
@@ -83,11 +82,9 @@ public class Tutorial : MonoBehaviour
     private IEnumerator ShowTips()
     {
         if (!returningPlayer)  yield return new WaitForSeconds(145);
-
-        Destroy(hintContinueText);
-        print("destroyed");
         background.gameObject.SetActive(false);
         hintText.gameObject.SetActive(false);
+        hintContinueText.gameObject.SetActive(false);
         if (PlayerPrefs.GetBool("Hints") == true)
         {
             yield return new WaitForSeconds(delay);
@@ -107,6 +104,7 @@ public class Tutorial : MonoBehaviour
             yield return new WaitForSeconds(duration);
             background.gameObject.SetActive(false);
             hintText.gameObject.SetActive(false);
+            hintContinueText.gameObject.SetActive(false);
             StartCoroutine(ShowTips());
         }
        

@@ -15,7 +15,6 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject gameUI;
     [SerializeField] private BuildingSystem _buildingSystem;
     [SerializeField] private WinScreen _win;
-    private bool isPausable;
 
 
     void Start()
@@ -27,11 +26,7 @@ public class PauseManager : MonoBehaviour
     
     void Update()
     {
-        if (!isPaused && !_win.isGameWon && Currency.IsGameLost == false)
-        {
-            isPausable = true;
-        }
-       
+        
         if (Input.GetKeyDown(pauseKey) && !isPaused && _win.isGameWon == false && Currency.IsGameLost == false)
         {
             Pause();

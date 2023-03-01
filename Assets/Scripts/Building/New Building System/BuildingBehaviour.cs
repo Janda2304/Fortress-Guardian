@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using FG_NewBuildingSystem;
 using UnityEngine;
 
 namespace FG_NewBuildingSystem
@@ -10,13 +6,11 @@ namespace FG_NewBuildingSystem
     {
         public float maxHealth;
         public string buildingName;
-        public static float maxHealthReadOnly;
-   
+
         [HideInInspector] public float health;
         
         private void Start()
         {
-            maxHealthReadOnly = maxHealth;
             health = maxHealth;
         }
 
@@ -28,6 +22,17 @@ namespace FG_NewBuildingSystem
                 Destroy(gameObject);
             }
         }
+        
+        public void Repair(float repairAmount)
+        {
+            health += repairAmount;
+            if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
+        }
+
+
     }
 }
 

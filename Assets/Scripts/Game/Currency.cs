@@ -46,6 +46,7 @@ public class Currency : MonoBehaviour
         #endregion
         StartCoroutine(PassiveCoinGain());
         deathScreen.SetActive(false);
+        _pause.Resume();
     }
 
     private void Update()
@@ -56,6 +57,7 @@ public class Currency : MonoBehaviour
         if (Health <=0)
         {
             IsGameLost = true;
+            _pause.Pause();
             Health = 0;
             //_sounds.GameOverSound();
             deathScreen.SetActive(true);
@@ -113,6 +115,7 @@ public class Currency : MonoBehaviour
     public void ContinuePlaying()
     {
         IsGameLost = false;
+        _pause.Resume();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         AutoLoad.Enabled = false;

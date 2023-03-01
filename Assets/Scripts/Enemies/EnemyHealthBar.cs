@@ -19,7 +19,7 @@ namespace FG_EnemyAI
 
         private void Start()
         {
-            mainCamera = FindObjectOfType<Camera>();
+            mainCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<Camera>();
         }
 
         private void Update()
