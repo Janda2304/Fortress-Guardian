@@ -31,7 +31,7 @@ public class CannonProjectile : MonoBehaviour
         }
         if (collision.gameObject.layer is 10)
         {
-            collision.gameObject.GetComponent<EnemyAI>().TakeDamage(_cannon.projectileDamage);
+            collision.gameObject.GetComponent<EnemyAI>().TakeDamage(_cannon.damage);
             explosion.Play(true);
             source.PlayOneShot(explosionSoundEffect);
             Destroy(gameObject, 0.1f);

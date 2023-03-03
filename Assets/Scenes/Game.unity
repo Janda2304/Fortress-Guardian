@@ -8667,6 +8667,7 @@ GameObject:
   - component: {fileID: 1023813824}
   - component: {fileID: 1023813823}
   - component: {fileID: 1023813822}
+  - component: {fileID: 1023813825}
   m_Layer: 0
   m_Name: crosshair
   m_TagString: Untagged
@@ -8756,6 +8757,29 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1023813825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023813820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c15435aac50449449a0147a94e4b6b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshair: {fileID: 413539216}
+  defaultCrosshair: {fileID: 21300000, guid: 044ad49b35534f342af6d00d70eae1dd, type: 3}
+  upgradeCrosshair: {fileID: 21300000, guid: 9cda48e378d35dc4ab62c87729c084dd, type: 3}
+  sellCrosshair: {fileID: 21300000, guid: 0b33dddc53e18b94da2ecdfc515574aa, type: 3}
+  repairCrosshair: {fileID: 21300000, guid: aecb2ca547319c841a0334e1d2bd558f, type: 3}
+  range: 3
+  upgradeKey: 103
+  sellKey: 113
+  repairKey: 116
+  _buildingSystem: {fileID: 5709740793253795566}
+  playerCam: {fileID: 5709740792259185086}
 --- !u!1 &1035730076
 GameObject:
   m_ObjectHideFlags: 0

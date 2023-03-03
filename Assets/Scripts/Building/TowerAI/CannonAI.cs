@@ -14,11 +14,11 @@ public class CannonAI : MonoBehaviour
    [SerializeField] private Transform shootPoint;
    [Header("Firing Settings")]
    [SerializeField] private float projectileForce;
-   [SerializeField] private float fireRate;
+   public float fireRate;
    [SerializeField] private float rotationSpeed;
    public float projectileLifespan;
-   public float projectileDamage;
-   [SerializeField] private float cannonRange;
+   public float damage;
+   public float range;
    
    private float timer  = 0f;
    private float timerMax = 0;
@@ -38,7 +38,7 @@ public class CannonAI : MonoBehaviour
    {
       timer += Time.deltaTime;
       
-      targets = Physics.OverlapSphere(transform.position, cannonRange, LayerMask.GetMask("Enemy"));
+      targets = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Enemy"));
       if (targets.Length > 0)
       {
         target = targets[0].gameObject;
