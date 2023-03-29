@@ -21,7 +21,6 @@ namespace FG_EnemyAI
 
         [Header("Wave Settings")] 
         public int currWave;
-        public static int currWaveStatic;
         public int waveDuration;
         private float waveTimer;
         private float spawnInterval;
@@ -57,43 +56,20 @@ namespace FG_EnemyAI
 
         private void Update()
         {
-            currWaveStatic = currWave;
-            if (currWaveStatic != currWave)
-            {
-                currWave = currWaveStatic;
-            }
-            
-            #region Enemy First Appear
-            //adds enemies to the spawnable list based on theirs first appear wave
-            foreach (var enemy in enemies)
-            {
-                if (enemy.firstAppear == currWave && !spawnableEnemies.Contains(enemy))
-                {
-                    spawnableEnemies.Add(enemy);
-                }
-            }
-            #endregion
             
             #region Wave Timer
-            if (!waveActive)
-            {
-                waveTimerText.text = "Wave not active";
-            }
-            else if (currWave != 10)
+            if (currWave <= waveCount)
             {
                 waveTimerText.text = $"{decimal.Round(Convert.ToDecimal(waveTimer), 1)}s";
             }
             #endregion
             
             #region Start Wave
-            //starts wave on key press
+            //starts wave on a key press
             waveNumberText.text = $"{currWave}/{waveCount}";
             if (Input.GetKeyDown(KeyCode.L) && !waveActive && currWave < waveCount)
             {
-                startWaveText.gameObject.SetActive(false);
-                waveActive = true;
-                currWave++; 
-                GenerateWave();
+                StartNewWave();
             }
             else if (Input.GetKeyDown(KeyCode.L) && waveActive)
             {
@@ -101,27 +77,11 @@ namespace FG_EnemyAI
             }
             #endregion
             
-            #region End Wave 
-            //end wave if all enemies are killed
-            if (spawnedEnemies.Count == 0 && waveActive && waveTimer < waveDuration - spawnInterval)
-            {
-                waveActive = false;
-                waveTimer = waveDuration;
-                startWaveText.gameObject.SetActive(true);
-            }
-            #endregion
-            
-            #region Win
-            if (currWave >= waveCount && spawnedEnemies.Count == 0 && !waveActive)
-            {
-                currWave = waveCount;
-                winScreen.SetActive(true);
-                _win.CustomOnEnable();
-            }
-            #endregion Win
-
-
-
+           
+            //ends wave if all enemies are killed
+            if (spawnedEnemies.Count == 0 && waveActive && waveTimer < waveDuration - spawnInterval) EndWave();
+            //executes when all waves are done and no enemies are left to spawn
+            if (currWave >= waveCount && spawnedEnemies.Count == 0 && !waveActive) Win();
 
         }
 
@@ -136,9 +96,8 @@ namespace FG_EnemyAI
             {
                 if (enemiesToSpawn.Count > 0)
                 {
-                    GameObject enemy = Instantiate(enemiesToSpawn[0], spawnLocation[spawnIndex].position,
-                        Quaternion.identity);
-                    enemiesToSpawn.RemoveAt(0);
+                    GameObject enemy = Instantiate(enemiesToSpawn[0], spawnLocation[spawnIndex].position, Quaternion.identity);
+                    enemiesToSpawn.Remove(enemy);
                     spawnedEnemies.Add(enemy);
                     spawnTimer = spawnInterval;
 
@@ -156,19 +115,16 @@ namespace FG_EnemyAI
             else
             {
                 spawnTimer -= Time.fixedDeltaTime;
-
             }
-
+            //starts a new wave if the current wave timer runs out and there are still spawned enemies left 
             if (waveTimer <= 0 && waveActive)
             {
-                currWave++;
-                GenerateWave();
+               StartNewWave();
             }
-
+            //ends the wave if there are no enemies left 
             if (spawnedEnemies.Count == 0 && waveActive && waveTimer < waveDuration - spawnInterval)
             {
-                waveActive = false;
-                waveTimer = waveDuration;
+                EndWave();
             }
 
         }
@@ -193,8 +149,6 @@ namespace FG_EnemyAI
 
         public void GenerateEnemies()
         {
-
-
             List<GameObject> generatedEnemies = new List<GameObject>();
             if (currWave == 10 && SceneManager.GetActiveScene().name == "ForestMap")
             {
@@ -229,6 +183,39 @@ namespace FG_EnemyAI
             waveActiveErrorText.gameObject.SetActive(true);
             yield return new WaitForSeconds(1);
             waveActiveErrorText.gameObject.SetActive(false);
+        }
+
+        private void FirstAppear()
+        {
+            //adds enemies to the spawnable list based on theirs first appear wave
+            foreach (var enemy in enemies)
+            {
+                if (enemy.firstAppear == currWave && !spawnableEnemies.Contains(enemy)) spawnableEnemies.Add(enemy);
+            }
+        }
+
+        private void StartNewWave()
+        {
+            FirstAppear();
+            startWaveText.enabled = false;
+            waveActive = true;
+            currWave++; 
+            GenerateWave();
+        }
+
+        private void Win()
+        {
+            currWave = waveCount;
+                winScreen.SetActive(true);
+                _win.Win();
+        }
+
+        private void EndWave()
+        {
+            waveTimerText.text = "Wave not active";
+            waveActive = false;
+            waveTimer = waveDuration;
+            startWaveText.enabled = true;
         }
 
     }

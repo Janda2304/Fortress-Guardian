@@ -15,6 +15,7 @@ TagManager:
   - PlayerCamera
   - BirdCamera
   - PopupText
+  - UpgradeCost
   layers:
   - Default
   - TransparentFX

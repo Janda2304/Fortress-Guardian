@@ -1,4 +1,5 @@
 using System;
+using FG_CustomFunctions;
 using FG_EnemyAI;
 using TMPro;
 using UnityEngine;
@@ -25,29 +26,23 @@ namespace FG_NewBuildingSystem
         [SerializeField] private BuildingBehaviour _building;
         [SerializeField][Tooltip("Can be null if the enum upgrade is not set to Cannon")] private CannonAI _cannon;
         [Header("Upgrade General")]
-        [SerializeField] private int upgradeCost;
+        public int upgradeCost;
         private int upgradeLevel;
         [SerializeField][Tooltip("max upgrade level for this building")] private int maxLevel;
+
         [Header("Multiplicative Upgrade Calculation")]
-        [Tooltip("the default value for all additions, if others would be set to 0 with useDefaultValue set to true it will use this value")]
-        [SerializeField] private float upgradeMultiplier;
-        [SerializeField] private float upgradeCostMultiplier;
-        [SerializeField] private float hpMultiplier;
-        [SerializeField] private float damageMultiplier;
-        [SerializeField] private float rangeMultiplier;
-        [SerializeField] private float fireRateMultiplier;
+        [SerializeField] private MultiplicativeUpgrade multiplicativeUpgrade;
+        
         [Header("Additive Upgrade Calculation")]
-        [Tooltip("the default value for all additions, if others would be set to 0 with useDefaultValue set to true it will use this value")] 
-        [SerializeField] private float upgradeAdditive;
-        [SerializeField] private float upgradeCostAdditive;
-        [SerializeField] private float hpAdditive;
-        [SerializeField] private float dmgAdditive;
-        [SerializeField] private float rangeAdditive;
-        [SerializeField] private float fireRateAdditive;
+        [SerializeField] private AdditiveUpgrade additiveUpgrade;
+        
         [Header("Other")] 
-        [SerializeField] private TMP_Text upgradeCostText;
+        public TMP_Text upgradeCostText;
         [SerializeField] private BuildingSoundsControl _sounds;
         [SerializeField] private WaveSpawner _wave;
+        [SerializeField] private BuildingMenus _buildingActions;
+
+        public int sumPrice;
 
 
 
@@ -55,8 +50,10 @@ namespace FG_NewBuildingSystem
         private void Start()
         {
             #region setup
-            _wave = FindObjectOfType<WaveSpawner>();
+            upgradeCostText = GameObjectC.FindObjectByName("UpgradePrice").GetComponent<TMP_Text>();
             _sounds = FindObjectOfType<BuildingSoundsControl>();
+            _buildingActions = FindObjectOfType<BuildingMenus>();
+            _wave = FindObjectOfType<WaveSpawner>();
             if (multiplicative && additive)
             {
                 additive = true;
@@ -67,19 +64,23 @@ namespace FG_NewBuildingSystem
             {
                 if (multiplicative)
                 {
-                    if (hpMultiplier == 0) hpMultiplier = upgradeMultiplier;
-                    if (damageMultiplier == 0) damageMultiplier = upgradeMultiplier;
-                    if (rangeMultiplier == 0) rangeMultiplier = upgradeMultiplier;
-                    if (fireRateMultiplier == 0) fireRateMultiplier = upgradeMultiplier;
-                    if (upgradeCostMultiplier == 0) upgradeCostMultiplier = upgradeMultiplier;
+                    MultiplicativeUpgrade mu = multiplicativeUpgrade;
+                    if (mu.hpMultiplier == 0) mu.hpMultiplier = mu.upgradeMultiplier;
+                    if (mu.dmgMultiplier == 0) mu.dmgMultiplier = mu.upgradeMultiplier;
+                    if (mu.rangeMultiplier == 0) mu.rangeMultiplier = mu.upgradeMultiplier;
+                    if (mu.fireRateMultiplier == 0) mu.fireRateMultiplier = mu.upgradeMultiplier;
+                    if (mu.upgradeCostMultiplier == 0) mu.upgradeCostMultiplier = mu.upgradeMultiplier;
+                    multiplicativeUpgrade = mu;
                 }
                 else if (additive)
                 {
-                    if (hpAdditive == 0) hpAdditive = upgradeAdditive;
-                    if (dmgAdditive == 0) dmgAdditive = upgradeAdditive;
-                    if (rangeAdditive == 0) rangeAdditive = upgradeAdditive;
-                    if (fireRateAdditive == 0) fireRateAdditive = upgradeAdditive;
-                    if (upgradeCostAdditive == 0) upgradeCostAdditive = upgradeAdditive;
+                    AdditiveUpgrade au = additiveUpgrade;
+                    if (au.hpAdditive == 0) au.hpAdditive = au.upgradeAdditive;
+                    if (au.dmgAdditive == 0) au.dmgAdditive = au.upgradeAdditive;
+                    if (au.rangeAdditive == 0) au.rangeAdditive = au.upgradeAdditive;
+                    if (au.fireRateAdditive == 0) au.fireRateAdditive = au.upgradeAdditive;
+                    if (au.upgradeCostAdditive == 0) au.upgradeCostAdditive = au.upgradeAdditive;
+                    additiveUpgrade = au;
                 }
             }
             #endregion
@@ -88,6 +89,12 @@ namespace FG_NewBuildingSystem
         private void FixedUpdate()
         {
             upgradeCostText.text = upgradeCost.ToString();
+            if (_buildingActions.upgradeAction == BuildingMenus.Action.Upgrade)
+            {
+                upgradeCostText.text = upgradeCost.ToString();
+                upgradeCostText.gameObject.SetActive(_buildingActions.buildingSelected);
+            }
+            else upgradeCostText.gameObject.SetActive(false);
         }
         public void Upgrade()
         {
@@ -97,21 +104,22 @@ namespace FG_NewBuildingSystem
                 if (upgradeLevel < maxLevel && !_wave.waveActive && Currency.Coins >= upgradeCost)
                 {
                     Currency.PayCoins(upgradeCost);
+                    sumPrice += upgradeCost;
                     upgradeLevel++;
-                    upgradeCost = (int)(upgradeCost * upgradeCostMultiplier);
+                    upgradeCost = (int)(upgradeCost * multiplicativeUpgrade.upgradeCostMultiplier);
                     upgradeCostText.text = upgradeCost.ToString();
                     if (upgradeType == UpgradeType.Fence)
                     {
-                        _building.maxHealth = (int)(_building.maxHealth * hpMultiplier);
+                        _building.maxHealth = (int)(_building.maxHealth * multiplicativeUpgrade.hpMultiplier);
                         _building.health = _building.maxHealth;
                     }
                     if (upgradeType == UpgradeType.Cannon)
                     {
-                        _building.maxHealth = (int)(_building.maxHealth * hpMultiplier);
+                        _building.maxHealth = (int)(_building.maxHealth * multiplicativeUpgrade.hpMultiplier);
                         _building.health = _building.maxHealth;
-                        _cannon.damage = (int)(_cannon.damage * damageMultiplier);
-                        _cannon.range = (int)(_cannon.range * rangeMultiplier);
-                        _cannon.fireRate = (int)(_cannon.fireRate * fireRateMultiplier);
+                        _cannon.damage = (int)(_cannon.damage * multiplicativeUpgrade.dmgMultiplier);
+                        _cannon.range = (int)(_cannon.range * multiplicativeUpgrade.rangeMultiplier);
+                        _cannon.fireRate = (int)(_cannon.fireRate * multiplicativeUpgrade.fireRateMultiplier);
                         print($"Damage: {_cannon.damage} Range: {_cannon.range} FireRate: {_cannon.fireRate} AttackRange: {_cannon.range}");
                     }
                     
@@ -125,21 +133,21 @@ namespace FG_NewBuildingSystem
                 {
                     Currency.PayCoins(upgradeCost);
                     upgradeLevel++;
-                    upgradeCost = (int)(upgradeCost + upgradeCostAdditive);
-                    upgradeCostText.text = upgradeCost.ToString();
+                    upgradeCost = (int)(upgradeCost + additiveUpgrade.upgradeCostAdditive);
+                   // upgradeCostText.text = upgradeCost.ToString();
                     if (upgradeType == UpgradeType.Fence)
                     {
-                        _building.maxHealth = (int)(_building.maxHealth + hpAdditive);
+                        _building.maxHealth = (int)(_building.maxHealth + additiveUpgrade.hpAdditive);
                         _building.health = _building.maxHealth;
                     }
                     
                     if (upgradeType == UpgradeType.Cannon)
                     {
-                        _building.maxHealth = (int)(_building.maxHealth + hpAdditive);
+                        _building.maxHealth = (int)(_building.maxHealth + additiveUpgrade.hpAdditive);
                         _building.health = _building.maxHealth;
-                        _cannon.damage = (int)(_cannon.damage + dmgAdditive);
-                        _cannon.range = (int)(_cannon.range + rangeAdditive);
-                        _cannon.fireRate = (int)(_cannon.fireRate + fireRateAdditive);
+                        _cannon.damage = (int)(_cannon.damage + additiveUpgrade.dmgAdditive);
+                        _cannon.range = (int)(_cannon.range + additiveUpgrade.rangeAdditive);
+                        _cannon.fireRate = (int)(_cannon.fireRate + additiveUpgrade.fireRateAdditive);
                         print($"Damage: {_cannon.damage} Range: {_cannon.range} FireRate: {_cannon.fireRate} AttackRange: {_cannon.range}");
                     }
                     
@@ -149,4 +157,30 @@ namespace FG_NewBuildingSystem
            
         }
     }
+}
+
+[System.Serializable]
+
+public struct AdditiveUpgrade
+{
+    [Tooltip("the default value for all additions, if others would be set to 0 with useDefaultValue set to true it will use this value")] 
+    public float upgradeAdditive;
+    public float upgradeCostAdditive;
+    public float hpAdditive;
+    public float dmgAdditive;
+    public float rangeAdditive;
+    public float fireRateAdditive;
+}
+
+[System.Serializable]
+
+public struct MultiplicativeUpgrade
+{
+    [Tooltip("the default value for all multiplier, if others would be set to 0 with useDefaultValue set to true it will use this value")] 
+    public float upgradeMultiplier;
+    public float upgradeCostMultiplier;
+    public float hpMultiplier;
+    public float dmgMultiplier;
+    public float rangeMultiplier;
+    public float fireRateMultiplier;
 }

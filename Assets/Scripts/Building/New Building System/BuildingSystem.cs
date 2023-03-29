@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace FG_NewBuildingSystem
 {
+    
+    public enum BuildingType
+    {
+        Cannon,
+        Fence
+    }
     public class BuildingSystem : MonoBehaviour
     {
         public List<Building> buildings = new List<Building>();
@@ -72,15 +78,15 @@ namespace FG_NewBuildingSystem
             }
             #endregion
 
-            buildings[index].PreviewMeshRenderer.material = !isBuildable ? buildings[index].cantBuild : buildings[index].canBuild;
+            buildings[index].previewMeshRenderer.material = !isBuildable ? buildings[index].cantBuild : buildings[index].canBuild;
             if (Input.GetKeyDown(buildKeys[0]))
             {
-                SetupBuild(0);
+                SetupBuild(BuildingType.Fence);
             }
            
             if (Input.GetKeyDown(buildKeys[1]))
             {
-                SetupBuild(1);
+                SetupBuild(BuildingType.Cannon);
             }
 
             #region build
@@ -103,20 +109,31 @@ namespace FG_NewBuildingSystem
         
         
         #region Setup Build
-        private void SetupBuild(int i)
+        private void SetupBuild(BuildingType type)
         {
+            int i = 0;
+            switch (type)
+            {
+                case BuildingType.Fence:
+                    i = 0;
+                    break;
+                case BuildingType.Cannon:
+                    i = 1;
+                    break;
+            }
             Building building = buildings[i];
+          
             index = i;
-                if (isBuilding)
-                {
-                    building.HidePreview();
-                    isBuilding = false;
-                }
-                else
-                {
-                    building.ShowPreview();
-                    isBuilding = true;
-                }
+            if (isBuilding)
+            {
+                building.HidePreview();
+                isBuilding = false;
+            }
+            else
+            {
+                building.ShowPreview();
+                isBuilding = true;
+            }
 
              
         }
@@ -131,7 +148,7 @@ namespace FG_NewBuildingSystem
         [Header("Preview")]
         public Material canBuild;
         public Material cantBuild;
-        public MeshRenderer PreviewMeshRenderer;
+        public MeshRenderer previewMeshRenderer;
         public GameObject preview;
         [Header("Meshes")]
         public Mesh previewMesh;
@@ -151,7 +168,7 @@ namespace FG_NewBuildingSystem
         
         public void ShowPreview()
         {
-            preview.gameObject.SetActive(true);
+            preview.SetActive(true);
             previewFilter.mesh = previewMesh;
             rangePreviewFilter.mesh = rangePreviewMesh;
             
@@ -160,7 +177,7 @@ namespace FG_NewBuildingSystem
         
         public void HidePreview()
         {
-            preview.gameObject.SetActive(false);
+            preview.SetActive(false);
             preview.transform.rotation = Quaternion.identity;
         }
     }

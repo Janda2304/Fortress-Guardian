@@ -598,6 +598,8 @@ MonoBehaviour:
   baseSellPrice: 75
   _building: {fileID: 0}
   sellGainText: {fileID: 5102077061896430545}
+  _upgrade: {fileID: 0}
+  sellByUpgradeMultiplier: 0
 --- !u!225 &1496362325704080246
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -886,7 +888,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3619088528246703899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,6 +923,7 @@ MonoBehaviour:
   _building: {fileID: 0}
   healthBarRect: {fileID: 3768053254510524896}
   mainCamera: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &4616994451994815421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,6 +1116,7 @@ MonoBehaviour:
   _building: {fileID: 0}
   repairPriceText: {fileID: 3823659250111167316}
   _sounds: {fileID: 0}
+  _wave: {fileID: 0}
 --- !u!1 &5423507760708329487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,8 +1786,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9945409a64d72bb4eab583fdf6f39f81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 3619088528246703901}
+  multiplicative: 0
+  additive: 0
+  useDefaultValue: 1
+  upgradeType: 0
   _building: {fileID: 0}
+  _cannon: {fileID: 0}
+  upgradeCost: 0
+  maxLevel: 0
+  upgradeMultiplier: 0
+  upgradeCostMultiplier: 0
+  hpMultiplier: 0
+  damageMultiplier: 0
+  rangeMultiplier: 0
+  fireRateMultiplier: 0
+  upgradeAdditive: 0
+  upgradeCostAdditive: 0
+  hpAdditive: 0
+  dmgAdditive: 0
+  rangeAdditive: 0
+  fireRateAdditive: 0
+  upgradeCostText: {fileID: 0}
+  _sounds: {fileID: 0}
+  _wave: {fileID: 0}
+  sumPrice: 0
 --- !u!61 &1018867122146847519
 BoxCollider2D:
   m_ObjectHideFlags: 0

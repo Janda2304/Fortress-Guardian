@@ -28,20 +28,17 @@ public class Currency : MonoBehaviour
        
         #region difficulty
         string difficulty = PlayerPrefs.GetString("difficulty");
-        if (difficulty == "Novice")
+        switch (difficulty)
         {
-            Coins = 400;
-            Health = 75;
-        }
-        else if (difficulty == "Journeyman")
-        {
-            Coins = 350;
-            Health = 50;
-        }
-        else if (difficulty == "Master")
-        {
-            Coins = 250;
-            Health = 25;
+            case "Novice":
+                Setup(75,400);
+                break;
+            case "Journeyman":
+                Setup(50, 350);
+                break;
+            case "Master":
+                Setup(25,250);
+                break;
         }
         #endregion
         StartCoroutine(PassiveCoinGain());
@@ -86,10 +83,6 @@ public class Currency : MonoBehaviour
                 }
             
             }
-            else
-            {
-                StartCoroutine(PassiveCoinGain());
-            }
     }
     
     public static void AddCoins(int amount)
@@ -127,6 +120,12 @@ public class Currency : MonoBehaviour
         deathScreen.SetActive(false);
         _pause.Resume();
         SceneManager.LoadScene("MainMenu");
+    }
+    
+    private void Setup(float health, int coins)
+    {
+       Health = health;
+       Coins = coins;
     }
     
 

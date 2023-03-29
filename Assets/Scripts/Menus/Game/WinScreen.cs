@@ -12,7 +12,7 @@ public class WinScreen : MonoBehaviour
     public bool isGameWon;
     [SerializeField] private PauseManager _pause;
 
-    public void CustomOnEnable()
+    public void Win()
     {
         _pause.Pause();
         pauseScreen.SetActive(false);

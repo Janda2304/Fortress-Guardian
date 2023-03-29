@@ -6,8 +6,7 @@ namespace FG_NewBuildingSystem
     {
         public float maxHealth;
         public string buildingName;
-
-        [HideInInspector] public float health;
+        public float health;
         
         private void Start()
         {

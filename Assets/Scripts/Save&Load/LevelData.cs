@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FG_EnemyAI;
@@ -10,24 +11,23 @@ public class LevelData : ScriptableObject
 {
     public int wave;
     public string levelName;
-    
-    
+    WaveSpawner _waveSpawner;
+
+    public void Awake()
+    {
+        _waveSpawner = FindObjectOfType<WaveSpawner>();
+    }
+
     public void SaveLevelData()
     {
-        wave = WaveSpawner.currWaveStatic;
+        wave = _waveSpawner.currWave;
         levelName = SceneManager.GetActiveScene().name;
     }
 
     public void LoadLevelData()
     {
-        WaveSpawner.currWaveStatic = wave;
-        if (SceneManager.GetActiveScene().name != levelName)
-        {
-            SceneManager.LoadScene(levelName);
-        }
-
-
-
+        _waveSpawner.currWave = wave;
+        if (SceneManager.GetActiveScene().name != levelName) SceneManager.LoadScene(levelName);
     }
 
 }
