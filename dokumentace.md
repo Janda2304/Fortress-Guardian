@@ -13,7 +13,7 @@
 - ### programy pro úpravu rastrové grafiky GNU Image Manipulation Program a pro tvorbu loga "Frist Studios" program Microsoft Paint
 - ### Zároveň pro získání hudby byla použita stránka pixabay.com a jiné zdroje royalty free hudby 
 - ### Soundtrack v hlavním menu vytvořil Thomas Mutiu a byl nalezen taktéž na platformě pixabay.com (má fakt good hudbu do her ngl)
-- ### Pro některé animace jsem vytvořil stránku Mixamo a zároveň jejich mixamo auto-rig funkci
+- ### Pro některé animace jsem použil stránku Mixamo a zároveň jejich mixamo auto-rig funkci
 - ### Větší část assetů byla stažena z Unity Asset Store a později upravena pro potřeby hry 
 
 - ## STRUČNÝ POPIS JAK TO FUNGUJE UVNITŘ 
