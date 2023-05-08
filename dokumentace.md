@@ -1,10 +1,9 @@
 - ## CO APLIKACE/HRA/BOT DĚLÁ
 - ### hra se snaží zaplnit díru na trhu tower defense her a nabídnout hráčovi dobrý herní zážitek i z pohledu první osoby jenž je pro tower defense hry neobvyklý -
-- ### hráč má možnost si vybrat ze škály dvou/tří (změň to vole) map, která každá nabízí jiné nepřátele a jiné taktiky 
+- ### hráč má možnost si vybrat ze škály dvou map, která každá nabízí jiné nepřátele a jiné taktiky 
 - ### zároveň systém vln v této hře byl navržen tak aby pokaždé generoval jiné nepřátele - to znamená že kdykoliv se hráč vrátí hra mu nabídne něco nového co ještě nezažil 
-- ### hra taktéž nabízí dva herní módy : Kampaň, Nekonečný
+- ### hra taktéž nabízí jeden herní mód : Kampaň (v plánu je ještě pár herních módů, například Endless, challenges)
 - ### Kampaň - nabízí hráčovi si zahrát herní mód s levely které mají danou délku a mají k sobě daný příběh (backstory, lore)
-- ### Nekonečný - nabízí hráčovi si zahrát na mapách z kampaňového módu nekonečně dlouho - hra nemá žádnou konečnou vlnu 
 
 - ## POPIS POUŽITÝCH TECHNOLOGIÍ
 - ### použity byly : 
