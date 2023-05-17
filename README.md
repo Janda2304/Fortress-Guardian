@@ -1,8 +1,10 @@
 # Fortress Guardian
-- ### a tower defense game played in a unusual perspective - First Person
-- ### Created as a school project and a project for me to learn Unity3D from 
+- ### a tower defense game played mainly in a unusual perspective - First Person
+- ### also features a second old school top-down perspective
 - ### Features a fully procedurally generated Waves - you never know what will come 
-- ### Features saving with support for multiple save files
+- ### Features full saving between game sessions with support for teoretically infinite save files
+- ### Created as a school project and a project for me to learn Unity3D from 
+
 
 
 
